@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.name }} - Portfolio</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <div class="header">
+        <h1>{{ user.name }}</h1>
+        <h2>{{ user.title }}</h2>
+        <p class="about">{{ user.about }}</p>
+    </div>
+
+    <!-- Contact -->
+    <div class="section">
+        <h3>Contact</h3>
+        <div class="contact-grid">
+            <div class="contact-item">
+                <div class="contact-label">Email</div>
+                <div class="contact-value">{{ user.email }}</div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-label">Phone</div>
+                <div class="contact-value">{{ user.phone }}</div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-label">Location</div>
+                <div class="contact-value">{{ user.location }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="section">
+        <h3>Skills</h3>
+        <div class="skills-grid">
+            {% if user.skills %}
+                {% for skill in user.skills %}
+                    <div class="skill-badge" onclick="showSkillDetails(this);" data-skill-name="{{ skill.name }}" data-skill-details="{{ skill.details | replace('\"', '&quot;') }}">{{ skill.name }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+        <!-- Skill Details Display -->
+        <div id="skillDetails" class="skill-details">
+            <div class="skill-details-content">
+                <h4 id="detailsSkillName">Chọn 1 skill để xem chi tiết</h4>
+                <p id="detailsSkillText">Nhấn vào một skill để hiển thị thông tin chi tiết</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Experience -->
+    <div class="section">
+        <h3>Experience</h3>
+        {% if user.experience %}
+            {% for exp in user.experience %}
+                <div class="card">
+                    <h4>{{ exp.company }}</h4>
+                    <div class="card-meta">{{ exp.role }} • {{ exp.time }}</div>
+                    <div class="card-desc">{{ exp.desc }}</div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- Education -->
+    <div class="section">
+        <h3>Education</h3>
+        <div class="card">
+            <h4>{{ user.education }}</h4>
+        </div>
+    </div>
+
+    <!-- Projects -->
+    <div class="section">
+        <h3>Projects</h3>
+        {% if user.projects %}
+            {% for project in user.projects %}
+                <div class="card">
+                    <h4>{{ project.name }}</h4>
+                    <div class="card-desc">{{ project.desc }}</div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+</div>
+
+<script>
+    const skillDetails = document.getElementById('skillDetails');
+    const detailsSkillName = document.getElementById('detailsSkillName');
+    const detailsSkillText = document.getElementById('detailsSkillText');
+    const skillBadges = document.querySelectorAll('.skill-badge');
+    
+    function showSkillDetails(element) {
+        const skillName = element.getAttribute('data-skill-name');
+        const skillDetailsText = element.getAttribute('data-skill-details');
+        
+        detailsSkillName.textContent = skillName;
+        detailsSkillText.textContent = skillDetailsText;
+        
+        // Remove active class from all badges
+        skillBadges.forEach(b => b.classList.remove('active'));
+        
+        // Add active class to clicked badge
+        element.classList.add('active');
+        
+        // Add show class to details
+        skillDetails.classList.add('show');
+    }
+</script>
+
+</body>
+</html>
