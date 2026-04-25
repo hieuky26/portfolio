@@ -79,11 +79,9 @@ async def home(request: Request):
     print("USER DATA:", user)
 
     return templates.TemplateResponse(
-        "index.html",
-        {
-            "request": request,
-            "user": user
-        }
+        request=request,
+        name="index.html",
+        context={"user": user}
     )
 
 
