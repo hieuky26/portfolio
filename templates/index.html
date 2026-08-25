@@ -1,121 +1,382 @@
+{% from "_icons.html" import icon %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ lang }}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ user.name }} - Portfolio</title>
-    <link rel="stylesheet" href="/static/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ profile.name }} — {{ profile.role }}</title>
+<meta name="description" content="{{ ui.meta_description }}">
+<meta name="author" content="{{ profile.name }}">
+<meta name="theme-color" content="#288719">
+
+<meta property="og:type" content="profile">
+<meta property="og:title" content="{{ profile.name }} — {{ profile.role }}">
+<meta property="og:description" content="{{ ui.meta_description }}">
+<meta property="og:url" content="{{ profile.website }}">
+<meta property="og:locale" content="{{ 'vi_VN' if lang == 'vi' else 'en_US' }}">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="{{ profile.website }}">
+<link rel="alternate" hreflang="en" href="{{ profile.website }}/?lang=en">
+<link rel="alternate" hreflang="vi" href="{{ profile.website }}/?lang=vi">
+<link rel="icon" href="/static/img/favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/style.css">
 </head>
+
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
-<div class="container">
+<!-- ================= NAV ================= -->
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a class="brand" href="#top" aria-label="{{ profile.name }}">
+      <span class="brand__mark" aria-hidden="true">{{ profile.initials }}</span>
+      <span class="brand__text">
+        <strong>{{ profile.name }}</strong>
+        <small>{{ profile.role }}</small>
+      </span>
+    </a>
 
-    <!-- Header -->
-    <div class="header">
-        <h1>{{ user.name }}</h1>
-        <h2>{{ user.title }}</h2>
-        <p class="about">{{ user.about }}</p>
-    </div>
+    <nav class="nav__links" id="navLinks" aria-label="Main">
+      <a href="#about">{{ ui.nav.about }}</a>
+      <a href="#skills">{{ ui.nav.skills }}</a>
+      <a href="#experience">{{ ui.nav.experience }}</a>
+      <a href="#projects">{{ ui.nav.projects }}</a>
+      <a class="nav__cta" href="#contact">{{ ui.nav.contact }}</a>
+      <a class="lang-toggle" href="?lang={{ other_lang }}" hreflang="{{ other_lang }}"
+         title="{{ ui.lang_switch_to }}" rel="alternate">
+        {{ icon('lang', 16) }}<span>{{ ui.lang_switch_code }}</span>
+      </a>
+    </nav>
 
-    <!-- Contact -->
-    <div class="section">
-        <h3>Contact</h3>
-        <div class="contact-grid">
-            <div class="contact-item">
-                <div class="contact-label">Email</div>
-                <div class="contact-value">{{ user.email }}</div>
-            </div>
-            <div class="contact-item">
-                <div class="contact-label">Phone</div>
-                <div class="contact-value">{{ user.phone }}</div>
-            </div>
-            <div class="contact-item">
-                <div class="contact-label">Location</div>
-                <div class="contact-value">{{ user.location }}</div>
-            </div>
-        </div>
-    </div>
+    <button class="nav__burger" id="navBurger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
+      {{ icon('menu', 22) }}
+    </button>
+  </div>
+  <div class="nav__progress" id="navProgress" aria-hidden="true"></div>
+</header>
 
-    <!-- Skills -->
-    <div class="section">
-        <h3>Skills</h3>
-        <div class="skills-grid">
-            {% if user.skills %}
-                {% for skill in user.skills %}
-                    <div class="skill-badge" onclick="showSkillDetails(this);" data-skill-name="{{ skill.name }}" data-skill-details="{{ skill.details | replace('\"', '&quot;') }}">{{ skill.name }}</div>
-                {% endfor %}
-            {% endif %}
-        </div>
-        
-        <!-- Skill Details Display -->
-        <div id="skillDetails" class="skill-details">
-            <div class="skill-details-content">
-                <h4 id="detailsSkillName">Chọn 1 skill để xem chi tiết</h4>
-                <p id="detailsSkillText">Nhấn vào một skill để hiển thị thông tin chi tiết</p>
-            </div>
-        </div>
-    </div>
+<main id="main">
 
-    <!-- Experience -->
-    <div class="section">
-        <h3>Experience</h3>
-        {% if user.experience %}
-            {% for exp in user.experience %}
-                <div class="card">
-                    <h4>{{ exp.company }}</h4>
-                    <div class="card-meta">{{ exp.role }} • {{ exp.time }}</div>
-                    <div class="card-desc">{{ exp.desc }}</div>
-                </div>
-            {% endfor %}
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="hero__bg" aria-hidden="true"></div>
+  <div class="wrap hero__inner">
+
+    <div class="hero__text">
+      {% if ui.hero.available %}
+      <p class="pill" data-reveal>
+        <span class="pill__dot" aria-hidden="true"></span>{{ ui.hero.available }}
+      </p>
+      {% endif %}
+
+      <h1 class="hero__name" data-reveal data-reveal-delay="1">{{ profile.name }}</h1>
+
+      <p class="hero__role" data-reveal data-reveal-delay="2">
+        {{ profile.role }}
+        {%- if profile.company %} <span class="hero__at">·</span>
+          {%- if profile.company_url %}
+          <a class="hero__co" href="{{ profile.company_url }}" target="_blank" rel="noopener">{{ profile.company }}</a>
+          {%- else %}
+          <span class="hero__co">{{ profile.company }}</span>
+          {%- endif %}
+        {%- endif %}
+      </p>
+
+      <p class="hero__tagline" data-reveal data-reveal-delay="3">{{ profile.tagline }}</p>
+
+      <div class="hero__actions" data-reveal data-reveal-delay="4">
+        <a class="btn btn--primary" href="#contact">{{ ui.hero.cta_contact }} {{ icon('arrow-right', 17) }}</a>
+        <a class="btn btn--ghost" href="#projects">{{ ui.hero.cta_projects }}</a>
+        {% if profile.cv_url %}
+        <a class="btn btn--ghost" href="/cv" target="_blank" rel="noopener">{{ icon('download', 17) }} {{ ui.hero.cta_cv }}</a>
         {% endif %}
+      </div>
+
+      <div class="hero__social" data-reveal data-reveal-delay="5">
+        <a href="mailto:{{ profile.email }}" aria-label="{{ ui.labels.email }}" title="{{ profile.email }}">{{ icon('mail', 19) }}</a>
+        {% if profile.github %}<a href="{{ profile.github }}" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">{{ icon('github', 19) }}</a>{% endif %}
+        {% if profile.linkedin %}<a href="{{ profile.linkedin }}" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">{{ icon('linkedin', 19) }}</a>{% endif %}
+        <a href="tel:{{ profile.phone_href }}" aria-label="{{ ui.labels.phone }}" title="{{ profile.phone }}">{{ icon('phone', 19) }}</a>
+      </div>
     </div>
 
-    <!-- Education -->
-    <div class="section">
-        <h3>Education</h3>
-        <div class="card">
-            <h4>{{ user.education }}</h4>
+    <!-- Do hoa trang tri: so do mang -->
+    <div class="hero__art" data-reveal data-reveal-delay="3" aria-hidden="true">
+      <svg viewBox="0 0 320 320" class="netgraph" role="presentation">
+        <defs>
+          <linearGradient id="nglink" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#6CBE45"/><stop offset="100%" stop-color="#288719"/>
+          </linearGradient>
+        </defs>
+        <g class="netgraph__links" stroke="url(#nglink)" stroke-width="1.4" fill="none" opacity=".55">
+          <path d="M160 160 L160 58"/><path d="M160 160 L62 108"/><path d="M160 160 L258 108"/>
+          <path d="M160 160 L62 218"/><path d="M160 160 L258 218"/><path d="M160 160 L160 272"/>
+          <path d="M62 108 L160 58"/><path d="M258 108 L160 58"/>
+          <path d="M62 218 L62 108"/><path d="M258 218 L258 108"/>
+          <path d="M62 218 L160 272"/><path d="M258 218 L160 272"/>
+        </g>
+        <g class="netgraph__nodes">
+          <circle cx="160" cy="160" r="26" class="n n--core"/>
+          <circle cx="160" cy="58"  r="12" class="n" style="--d:.0s"/>
+          <circle cx="62"  cy="108" r="12" class="n" style="--d:.4s"/>
+          <circle cx="258" cy="108" r="12" class="n" style="--d:.8s"/>
+          <circle cx="62"  cy="218" r="12" class="n" style="--d:1.2s"/>
+          <circle cx="258" cy="218" r="12" class="n" style="--d:1.6s"/>
+          <circle cx="160" cy="272" r="12" class="n" style="--d:2s"/>
+        </g>
+        <text x="160" y="165" class="netgraph__label" text-anchor="middle">{{ profile.initials }}</text>
+      </svg>
+    </div>
+  </div>
+
+  {% if stats %}
+  <div class="wrap">
+    <ul class="stats" data-reveal>
+      {% for s in stats %}
+      <li class="stats__item">
+        <span class="stats__value">{{ s.value }}</span>
+        <span class="stats__label">{{ s.label }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">{{ ui.sections.about_eyebrow }}</p>
+      <h2>{{ ui.sections.about_title }}</h2>
+    </div>
+
+    <div class="about">
+      <p class="about__text" data-reveal>{{ profile.about }}</p>
+
+      <aside class="about__facts" data-reveal data-reveal-delay="2">
+        <div class="fact">
+          <span class="fact__ico">{{ icon('pin', 18) }}</span>
+          <span><small>{{ ui.labels.location }}</small>{{ profile.location }}</span>
         </div>
+        <div class="fact">
+          <span class="fact__ico">{{ icon('mail', 18) }}</span>
+          <span><small>{{ ui.labels.email }}</small><a href="mailto:{{ profile.email }}">{{ profile.email }}</a></span>
+        </div>
+        <div class="fact">
+          <span class="fact__ico">{{ icon('github', 18) }}</span>
+          <span><small>{{ ui.labels.github }}</small><a href="{{ profile.github }}" target="_blank" rel="noopener">{{ profile.github.split('/')[-1] }}</a></span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SKILLS ================= -->
+<section class="section section--alt" id="skills">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">{{ ui.sections.skills_eyebrow }}</p>
+      <h2>{{ ui.sections.skills_title }}</h2>
+      <p class="sec-head__hint">{{ ui.sections.skills_hint }}</p>
     </div>
 
-    <!-- Projects -->
-    <div class="section">
-        <h3>Projects</h3>
-        {% if user.projects %}
-            {% for project in user.projects %}
-                <div class="card">
-                    <h4>{{ project.name }}</h4>
-                    <div class="card-desc">{{ project.desc }}</div>
-                </div>
+    <div class="skills">
+      <div class="skills__groups">
+        {% for group in skills %}
+        <article class="skillcard" data-reveal data-reveal-delay="{{ loop.index0 }}">
+          <header class="skillcard__head">
+            <span class="skillcard__ico">{{ icon(group.icon, 20) }}</span>
+            <h3>{{ group.group }}</h3>
+          </header>
+          <ul class="chips">
+            {% for item in group['items'] %}
+            <li>
+              <button type="button" class="chip"
+                      data-name="{{ item.name }}"
+                      data-detail="{{ item.detail }}"
+                      data-group="{{ group.group }}">{{ item.name }}</button>
+            </li>
             {% endfor %}
-        {% endif %}
+          </ul>
+        </article>
+        {% endfor %}
+      </div>
+
+      <aside class="skillpanel" id="skillPanel" aria-live="polite" data-reveal>
+        <div class="skillpanel__inner">
+          <p class="skillpanel__group" id="skillGroup"></p>
+          <h3 id="skillName">{{ ui.sections.skills_empty_title }}</h3>
+          <p id="skillDetail">{{ ui.sections.skills_empty_text }}</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXPERIENCE + EDUCATION ================= -->
+<section class="section" id="experience">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">{{ ui.sections.experience_eyebrow }}</p>
+      <h2>{{ ui.sections.experience_title }}</h2>
     </div>
 
-</div>
+    <ol class="timeline">
+      {% for job in experience %}
+      <li class="tl {% if job.current %}tl--current{% endif %}" data-reveal data-reveal-delay="{{ loop.index0 }}">
+        <span class="tl__dot" aria-hidden="true"></span>
+        <div class="tl__card">
+          <div class="tl__top">
+            <h3>{{ job.company }}</h3>
+            {% if job.current %}<span class="tag tag--live">{{ ui.labels.current }}</span>{% endif %}
+          </div>
+          <p class="tl__meta">
+            <strong>{{ job.role }}</strong>
+            <span>{{ job.time }}</span>
+            {% if job.location %}<span>{{ job.location }}</span>{% endif %}
+          </p>
+          <ul class="tl__points">
+            {% for p in job.points %}<li>{{ p }}</li>{% endfor %}
+          </ul>
+          {% if job.tech %}
+          <ul class="tags">
+            {% for tech in job.tech %}<li class="tag">{{ tech }}</li>{% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ol>
 
-<script>
-    const skillDetails = document.getElementById('skillDetails');
-    const detailsSkillName = document.getElementById('detailsSkillName');
-    const detailsSkillText = document.getElementById('detailsSkillText');
-    const skillBadges = document.querySelectorAll('.skill-badge');
-    
-    function showSkillDetails(element) {
-        const skillName = element.getAttribute('data-skill-name');
-        const skillDetailsText = element.getAttribute('data-skill-details');
-        
-        detailsSkillName.textContent = skillName;
-        detailsSkillText.textContent = skillDetailsText;
-        
-        // Remove active class from all badges
-        skillBadges.forEach(b => b.classList.remove('active'));
-        
-        // Add active class to clicked badge
-        element.classList.add('active');
-        
-        // Add show class to details
-        skillDetails.classList.add('show');
-    }
-</script>
+    <div class="sec-head sec-head--sub" data-reveal>
+      <p class="eyebrow">{{ ui.sections.education_eyebrow }}</p>
+      <h2>{{ ui.sections.education_title }}</h2>
+    </div>
 
+    <div class="edu-grid">
+      {% for e in education %}
+      <article class="edu" data-reveal data-reveal-delay="{{ loop.index0 }}">
+        <span class="edu__ico">{{ icon('cap', 22) }}</span>
+        <div>
+          <h3>{{ e.school }}</h3>
+          <p class="edu__meta">{{ e.degree }} <span>·</span> {{ e.time }}</p>
+          {% if e.note %}<p class="edu__note">{{ e.note }}</p>{% endif %}
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROJECTS ================= -->
+<section class="section section--alt" id="projects">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">{{ ui.sections.projects_eyebrow }}</p>
+      <h2>{{ ui.sections.projects_title }}</h2>
+    </div>
+
+    <div class="projects">
+      {% for p in projects %}
+      <article class="proj {% if p.featured %}proj--featured{% endif %}" data-reveal data-reveal-delay="{{ loop.index0 % 3 }}">
+        <div class="proj__head">
+          <span class="proj__kind">{{ p.kind }}</span>
+          {% if p.featured %}<span class="tag tag--live">{{ ui.labels.featured }}</span>{% endif %}
+        </div>
+        <h3 class="proj__name">{{ p.name }}</h3>
+        <p class="proj__desc">{{ p.desc }}</p>
+        {% if p.tech %}
+        <ul class="tags">
+          {% for tech in p.tech %}<li class="tag">{{ tech }}</li>{% endfor %}
+        </ul>
+        {% endif %}
+        {% if p.link %}
+        <a class="proj__link" href="{{ p.link }}" target="_blank" rel="noopener">
+          {{ ui.labels.view_project }} {{ icon('external', 15) }}
+        </a>
+        {% endif %}
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="section contact" id="contact">
+  <div class="wrap">
+    <div class="contact__panel" data-reveal>
+      <div class="contact__intro">
+        <p class="eyebrow eyebrow--on-dark">{{ ui.sections.contact_eyebrow }}</p>
+        <h2>{{ ui.sections.contact_title }}</h2>
+        <p class="contact__text">{{ ui.sections.contact_text }}</p>
+        <a class="btn btn--onDark" href="mailto:{{ profile.email }}">{{ icon('mail', 17) }} {{ profile.email }}</a>
+      </div>
+
+      <ul class="contact__list">
+        <li class="ccard">
+          <span class="ccard__ico">{{ icon('mail', 18) }}</span>
+          <span class="ccard__body"><small>{{ ui.labels.email }}</small><a href="mailto:{{ profile.email }}">{{ profile.email }}</a></span>
+          <button class="ccard__copy" type="button" data-copy="{{ profile.email }}"
+                  data-label="{{ ui.labels.copy }}" data-done="{{ ui.labels.copied }}"
+                  aria-label="{{ ui.labels.copy }}">{{ icon('copy', 16) }}</button>
+        </li>
+        {% if profile.work_email %}
+        <li class="ccard">
+          <span class="ccard__ico">{{ icon('mail', 18) }}</span>
+          <span class="ccard__body"><small>{{ ui.labels.work_email }}</small><a href="mailto:{{ profile.work_email }}">{{ profile.work_email }}</a></span>
+          <button class="ccard__copy" type="button" data-copy="{{ profile.work_email }}"
+                  data-label="{{ ui.labels.copy }}" data-done="{{ ui.labels.copied }}"
+                  aria-label="{{ ui.labels.copy }}">{{ icon('copy', 16) }}</button>
+        </li>
+        {% endif %}
+        <li class="ccard">
+          <span class="ccard__ico">{{ icon('phone', 18) }}</span>
+          <span class="ccard__body"><small>{{ ui.labels.phone }}</small><a href="tel:{{ profile.phone_href }}">{{ profile.phone }}</a></span>
+          <button class="ccard__copy" type="button" data-copy="{{ profile.phone }}"
+                  data-label="{{ ui.labels.copy }}" data-done="{{ ui.labels.copied }}"
+                  aria-label="{{ ui.labels.copy }}">{{ icon('copy', 16) }}</button>
+        </li>
+        <li class="ccard">
+          <span class="ccard__ico">{{ icon('pin', 18) }}</span>
+          <span class="ccard__body"><small>{{ ui.labels.location }}</small>{{ profile.location }}</span>
+        </li>
+        {% if profile.github %}
+        <li class="ccard">
+          <span class="ccard__ico">{{ icon('github', 18) }}</span>
+          <span class="ccard__body"><small>{{ ui.labels.github }}</small><a href="{{ profile.github }}" target="_blank" rel="noopener">{{ profile.github.split('//')[-1] }}</a></span>
+        </li>
+        {% endif %}
+        {% if profile.linkedin %}
+        <li class="ccard">
+          <span class="ccard__ico">{{ icon('linkedin', 18) }}</span>
+          <span class="ccard__body"><small>{{ ui.labels.linkedin }}</small><a href="{{ profile.linkedin }}" target="_blank" rel="noopener">{{ profile.linkedin.split('//')[-1] }}</a></span>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <p>© <span id="year">2026</span> {{ profile.name }}. {{ ui.footer.rights }}</p>
+    <p class="foot__built">{{ ui.footer.built }}</p>
+  </div>
+</footer>
+
+<a class="totop" href="#top" id="toTop" aria-label="{{ ui.labels.back_to_top }}" title="{{ ui.labels.back_to_top }}">
+  {{ icon('arrow-up', 18) }}
+</a>
+
+<script src="/static/js/main.js" defer></script>
 </body>
 </html>
