@@ -3,7 +3,7 @@
    Mau theo Zyxel Networks Brand Guidelines (08/2026):
      xanh   #64BE00 (Pantone 2287C, mau chu X trong logo)
      den    #1A1A1A cho chu; chu tren nen xanh luon dung mau den (du tuong phan AA)
-   Logo luon dat tren nen trang. Dark mode theo prefers-color-scheme.
+   Logo: ban chu den tren nen sang, ban chu trang khi dark mode.
    ========================================================================== */
 
 :root {
@@ -93,11 +93,9 @@ section { padding-block: clamp(4rem, 9vw, 7rem); }
 .bar { height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 
 .brand { display: flex; align-items: center; gap: .75rem; text-decoration: none; }
-/* Logo Zyxel luon nam tren nen trang, ke ca dark mode */
-.brand img {
-  height: 36px; width: auto; display: block;
-  background: #fff; padding: 5px 9px; border-radius: 10px;
-}
+/* Logo nam thang tren nen header; dark mode tu doi sang ban chu trang (the <picture>) */
+.brand picture { display: block; }
+.brand img { height: 32px; width: auto; display: block; }
 .brand__mark {
   display: grid; place-items: center;
   width: 36px; height: 36px; border-radius: 10px;

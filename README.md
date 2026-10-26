@@ -1,7 +1,7 @@
 # Portfolio — Lê Hiếu Kỳ
 
 Trang portfolio một trang, song ngữ EN/VI.
-Giao diện theo Zyxel Networks Brand Guidelines (08/2026): xanh `#64BE00`, chữ `#1A1A1A`, logo luôn trên nền trắng; font Be Vietnam Pro + JetBrains Mono; có dark mode.
+Giao diện theo Zyxel Networks Brand Guidelines (08/2026): xanh `#64BE00`, chữ `#1A1A1A`, logo chữ đen trên nền sáng, chữ trắng khi dark mode; font Be Vietnam Pro + JetBrains Mono; có dark mode.
 
 Live: https://hieuky.is-a.dev
 

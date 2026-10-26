@@ -30,8 +30,10 @@ PROFILE = {
     "initials": "HK",
     # Logo o thanh nav. De "" -> quay ve dau hieu chu cai (initials).
     # Neu file khong ton tai thi trang tu dong quay ve initials, khong bi vo layout.
-    # Logo Zyxel Networks dang SVG (den #000000 + xanh #3C9F00), luon dat tren nen trang.
+    # Logo Zyxel Networks dang SVG: ban chu den cho nen sang, ban chu trang cho dark mode
+    # (guideline cho phep ca hai, chon ban tuong phan nhat voi nen). X luon xanh #3C9F00.
     "logo": "/static/img/zyxel-networks.svg",
+    "logo_dark": "/static/img/zyxel-networks-white.svg",
     "logo_alt": "Zyxel Networks",
     "role": {
         "en": "System Integration Engineer",
