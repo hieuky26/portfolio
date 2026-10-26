@@ -208,3 +208,7 @@ __marimo__/
 
 # Ket qua build tinh
 dist/
+
+# Tai lieu dau vao, khong dua len repo
+/Zyxel Networks guidelines_*.pdf
+/portfolio-redesign.html
