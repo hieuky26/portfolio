@@ -8,6 +8,33 @@
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+  /* ---------- Ghi nho ngon ngu nguoi dung chon ---------- */
+  var langToggle = document.querySelector(".lang-toggle");
+  if (langToggle) {
+    langToggle.addEventListener("click", function () {
+      try {
+        localStorage.setItem("lang", langToggle.dataset.lang || "en");
+      } catch (e) {}
+    });
+  }
+
+  /* ---------- Logo nav: thieu file thi quay ve dau hieu chu cai ---------- */
+  var brandLogo = document.getElementById("brandLogo");
+  if (brandLogo) {
+    var useInitials = function () {
+      if (!brandLogo.parentNode) return;
+      var mark = document.createElement("span");
+      mark.className = "brand__mark";
+      mark.setAttribute("aria-hidden", "true");
+      mark.textContent = brandLogo.dataset.fallback || "";
+      brandLogo.replaceWith(mark);
+    };
+
+    brandLogo.addEventListener("error", useInitials);
+    // Script chay voi defer nen anh co the da loi xong truoc khi gan listener
+    if (brandLogo.complete && brandLogo.naturalWidth === 0) useInitials();
+  }
+
   /* ---------- Nav: do bong khi cuon + thanh tien do ---------- */
   var nav = document.getElementById("nav");
   var progress = document.getElementById("navProgress");
