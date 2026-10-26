@@ -30,7 +30,8 @@ PROFILE = {
     "initials": "HK",
     # Logo o thanh nav. De "" -> quay ve dau hieu chu cai (initials).
     # Neu file khong ton tai thi trang tu dong quay ve initials, khong bi vo layout.
-    "logo": "/static/img/zyxel-networks.png",
+    # Logo Zyxel Networks dang SVG (den #000000 + xanh #3C9F00), luon dat tren nen trang.
+    "logo": "/static/img/zyxel-networks.svg",
     "logo_alt": "Zyxel Networks",
     "role": {
         "en": "System Integration Engineer",
@@ -39,16 +40,14 @@ PROFILE = {
     "company": "Zyxel Networks Việt Nam",
     "company_url": "https://www.zyxel.com/vn",
     "tagline": {
-        "en": "I integrate networking hardware with the back-end systems behind it — and automate the "
-              "repetitive parts so they stop eating the week.",
-        "vi": "Tôi tích hợp thiết bị mạng với hệ thống back-end phía sau, và tự động hoá những phần "
-              "lặp đi lặp lại để chúng không ngốn hết cả tuần làm việc.",
+        "en": "I integrate networking hardware with back-end systems, and automate the parts that repeat.",
+        "vi": "Tôi tích hợp thiết bị mạng với hệ thống back-end, và tự động hoá những phần lặp đi lặp lại.",
     },
     "about": {
         "en": (
             "I work where networking meets software: bringing access points, switches and firewalls "
             "together with the Linux server stacks, RADIUS and captive-portal services that sit behind "
-            "them. A large part of the job is making that integration repeatable — Python tooling that "
+            "them. A large part of the job is making that integration repeatable: I write Python tooling that "
             "turns hundreds of manual device configurations into a reviewed, logged, one-click run. "
             "I started out in data analysis, so I still reach for Python, SQL and a clear chart "
             "whenever a system needs to explain itself."
@@ -56,7 +55,7 @@ PROFILE = {
         "vi": (
             "Tôi làm ở phần giao giữa hạ tầng mạng và phần mềm: ghép access point, switch, firewall "
             "với các stack server Linux, dịch vụ RADIUS và captive portal phía sau. Phần lớn công việc "
-            "là làm cho việc tích hợp đó lặp lại được — viết công cụ Python biến hàng trăm thao tác "
+            "là làm cho việc tích hợp đó lặp lại được. Tôi viết công cụ Python biến hàng trăm thao tác "
             "cấu hình thủ công thành một lần chạy có kiểm duyệt và có log. Xuất phát từ mảng phân tích "
             "dữ liệu, tôi vẫn quen dùng Python, SQL và một biểu đồ rõ ràng để hệ thống tự nói lên "
             "vấn đề của nó."
@@ -79,6 +78,25 @@ PROFILE = {
 #   {"value": "10+",  "label": {"en": "Systems deployed", "vi": "Hệ thống triển khai"}},
 # Tranh dung "so nam kinh nghiem" vi se lech voi moc 06/2026 o phan Kinh nghiem.
 STATS = []
+
+
+# Khung terminal trang tri o hero: mo phong mot lan chay dry-run cua cong cu SSH hang loat.
+# Moi dong: [kieu, chu]. Kieu: "cmd" lenh go vao, "info" dong xam, "ok" dong co dau tick xanh,
+# "done" dong ket qua. Giu moi dong duoi ~38 ky tu de khong tran tren dien thoai.
+HERO_TERMINAL = {
+    "title": "ssh-bulk: dry-run",
+    "lines": [
+        ["cmd", "ssh-bulk run vlan.j2 --dry-run"],
+        ["info", "sites.csv · 128 devices · 8 workers"],
+        ["ok", "AP-HCM-01     3 cmds   ok"],
+        ["ok", "AP-HCM-02     3 cmds   ok"],
+        ["ok", "SW-CORE-01    5 cmds   ok"],
+        ["info", "… 125 more"],
+        ["done", {"en": "passed · 0 blocked · log saved", "vi": "đạt · 0 lệnh bị chặn · đã lưu log"}],
+    ],
+    # Nhan nho o goc khung
+    "stack": ["Ubuntu", "FreeRADIUS", "Nginx", "MongoDB"],
+}
 
 
 # --------------------------------------------------------------------------
@@ -182,7 +200,7 @@ EXPERIENCE = [
     {
         "company": "Zyxel Networks Việt Nam",
         "role": {"en": "System Integration Engineer", "vi": "Kỹ sư Tích hợp Hệ thống"},
-        "time": {"en": "Jun 2026 — Present", "vi": "06/2026 — Nay"},
+        "time": {"en": "Jun 2026 - Present", "vi": "06/2026 - Nay"},
         "current": True,
         "location": {"en": "Ho Chi Minh City", "vi": "TP. Hồ Chí Minh"},
         "points": [
@@ -202,7 +220,7 @@ EXPERIENCE = [
     {
         "company": "NewAI",
         "role": {"en": "Data Analyst Intern", "vi": "Thực tập sinh Phân tích Dữ liệu"},
-        "time": {"en": "Jul 2023 — Jan 2024", "vi": "07/2023 — 01/2024"},
+        "time": {"en": "Jul 2023 - Jan 2024", "vi": "07/2023 - 01/2024"},
         "current": False,
         "location": {"en": "Ho Chi Minh City", "vi": "TP. Hồ Chí Minh"},
         "points": [
@@ -223,7 +241,7 @@ EDUCATION = [
     {
         "school": {"en": "Ton Duc Thang University", "vi": "Trường Đại học Tôn Đức Thắng"},
         "degree": {"en": "B.Sc. Computer Science", "vi": "Cử nhân Khoa học Máy tính"},
-        "time": "2019 — 2024",
+        "time": "2019 - 2024",
         "note": {"en": "Focus on data processing, machine learning and web systems.",
                  "vi": "Tập trung vào xử lý dữ liệu, học máy và hệ thống web."},
     },
@@ -294,13 +312,14 @@ PROJECTS = [
         "name": {"en": "This Portfolio", "vi": "Trang portfolio này"},
         "kind": {"en": "Web", "vi": "Web"},
         "desc": {
-            "en": "Bilingual single-page site built with FastAPI and Jinja2, with all content driven from "
-                  "one Python file and deployed on Render.",
-            "vi": "Trang đơn song ngữ dựng bằng FastAPI và Jinja2, toàn bộ nội dung nằm trong một file "
-                  "Python duy nhất, deploy trên Render.",
+            "en": "Bilingual single-page site rendered from Jinja2 templates to static HTML, with all content "
+                  "driven from one Python file and deployed on Netlify.",
+            "vi": "Trang đơn song ngữ dựng từ template Jinja2 ra HTML tĩnh, toàn bộ nội dung nằm trong một file "
+                  "Python duy nhất, deploy trên Netlify.",
         },
-        "tech": ["FastAPI", "Jinja2", "CSS", "Render"],
+        "tech": ["Python", "Jinja2", "CSS", "Netlify"],
         "link": "https://github.com/hieuky26/portfolio",
+        "link_label": {"en": "Source on GitHub", "vi": "Mã nguồn trên GitHub"},
         "featured": False,
     },
 ]

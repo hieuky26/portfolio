@@ -95,6 +95,7 @@ def build_context(lang: str, urls: dict) -> dict:
         "experience": localize(C.EXPERIENCE, lang),
         "education": localize(C.EDUCATION, lang),
         "projects": localize(C.PROJECTS, lang),
+        "terminal": localize(C.HERO_TERMINAL, lang),
     }
 
 
