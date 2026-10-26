@@ -1,6 +1,8 @@
+# Netlify chi phuc vu file tinh: build.py xuat HTML vao dist/ roi Netlify dua len CDN.
+# (Netlify Functions khong ho tro Python, nen khong chay FastAPI o day duoc.)
 [build]
   command = "pip install -r requirements.txt && python build.py"
-  publish = "static"
-[functions]
-  directory = "netlify/functions"
+  publish = "dist"
 
+[build.environment]
+  PYTHON_VERSION = "3.12"

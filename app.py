@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-Portfolio - Lê Hiếu Kỳ
-FastAPI + Jinja2, mot trang, song ngu EN/VI.
+Portfolio - Lê Hiếu Kỳ — server dev.
+
+Trang that chay o dang HTML tinh tren Cloudflare Pages (xem build.py).
+File nay chi dung khi lam viec o may: co reload, co ?lang=, co cookie.
 
 Noi dung: sua trong content.py
 Nhan giao dien: sua trong ui.py
-Giao dien: static/css/style.css, static/js/main.js
 """
 
 import os
@@ -16,7 +17,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 import content as C
-from ui import UI
+import sitegen as S
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, "static")
@@ -28,21 +29,6 @@ COOKIE_MAX_AGE = 60 * 60 * 24 * 365  # 1 nam
 app = FastAPI(title="Lê Hiếu Kỳ - Portfolio", docs_url=None, redoc_url=None)
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
-
-
-# --------------------------------------------------------------------------
-# Ngon ngu
-# --------------------------------------------------------------------------
-def localize(value, lang):
-    """Duyet de quy du lieu, thay moi dict {'en':..,'vi':..} bang chuoi cua `lang`."""
-    if isinstance(value, dict):
-        keys = set(value.keys())
-        if keys and keys <= set(C.LANGS) and all(isinstance(v, str) for v in value.values()):
-            return value.get(lang) or value.get(C.DEFAULT_LANG) or ""
-        return {k: localize(v, lang) for k, v in value.items()}
-    if isinstance(value, list):
-        return [localize(v, lang) for v in value]
-    return value
 
 
 def resolve_lang(request: Request) -> str:
@@ -62,28 +48,15 @@ def resolve_lang(request: Request) -> str:
     return C.DEFAULT_LANG
 
 
-# --------------------------------------------------------------------------
-# Routes
-# --------------------------------------------------------------------------
+def render(request: Request, lang: str):
+    ctx = S.build_context(lang, S.DEV_URLS)
+    return templates.TemplateResponse(request=request, name="index.html", context=ctx)
+
+
 @app.get("/")
 async def home(request: Request):
     lang = resolve_lang(request)
-    ui = UI[lang]
-    other_lang = "vi" if lang == "en" else "en"
-
-    ctx = {
-        "lang": lang,
-        "other_lang": other_lang,
-        "ui": ui,
-        "profile": localize(C.PROFILE, lang),
-        "stats": localize(C.STATS, lang),
-        "skills": localize(C.SKILLS, lang),
-        "experience": localize(C.EXPERIENCE, lang),
-        "education": localize(C.EDUCATION, lang),
-        "projects": localize(C.PROJECTS, lang),
-    }
-
-    response = templates.TemplateResponse(request=request, name="index.html", context=ctx)
+    response = render(request, lang)
 
     # Nho lua chon ngon ngu khi nguoi dung bam nut chuyen
     if request.query_params.get("lang", "").lower() in C.LANGS:
@@ -91,6 +64,12 @@ async def home(request: Request):
             LANG_COOKIE, lang, max_age=COOKIE_MAX_AGE, httponly=False, samesite="lax"
         )
     return response
+
+
+@app.get("/vi/")
+async def home_vi(request: Request):
+    """Khop voi duong dan cua ban tinh de link /vi/ khong bi 404 luc dev."""
+    return render(request, "vi")
 
 
 @app.get("/health")
@@ -101,10 +80,7 @@ async def health():
 @app.get("/cv")
 async def cv():
     """Chuyen huong toi file CV neu da khai bao cv_url trong content.py."""
-    url = C.PROFILE.get("cv_url")
-    if url:
-        return RedirectResponse(url)
-    return RedirectResponse("/#contact")
+    return RedirectResponse(C.PROFILE.get("cv_url") or "/#contact")
 
 
 @app.get("/favicon.ico", include_in_schema=False)
@@ -114,24 +90,12 @@ async def favicon():
 
 @app.get("/robots.txt", response_class=PlainTextResponse)
 async def robots():
-    site = C.PROFILE.get("website", "").rstrip("/")
-    return f"User-agent: *\nAllow: /\nSitemap: {site}/sitemap.xml\n"
+    return S.robots_txt()
 
 
 @app.get("/sitemap.xml")
 async def sitemap():
-    site = C.PROFILE.get("website", "").rstrip("/")
-    urls = "".join(
-        f"<url><loc>{site}/?lang={lang}</loc><changefreq>monthly</changefreq></url>"
-        for lang in C.LANGS
-    )
-    xml = (
-        '<?xml version="1.0" encoding="UTF-8"?>'
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
-        f"<url><loc>{site}/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>"
-        f"{urls}</urlset>"
-    )
-    return PlainTextResponse(xml, media_type="application/xml")
+    return PlainTextResponse(S.sitemap_xml(), media_type="application/xml")
 
 
 if __name__ == "__main__":

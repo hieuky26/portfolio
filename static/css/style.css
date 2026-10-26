@@ -118,6 +118,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   color: #fff; font-weight: 800; font-size: .84rem; letter-spacing: .04em;
   box-shadow: 0 4px 12px rgba(40, 135, 25, .28);
 }
+.brand__logo {
+  flex: none;
+  height: 26px; width: auto;      /* goc 130x51 -> hien 26px cao = mat do 2x, van net */
+  padding-right: 13px;
+  border-right: 1px solid var(--line);
+}
 .brand__text { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
 .brand__text strong { font-size: .95rem; font-weight: 700; color: var(--ink-900); white-space: nowrap; }
 .brand__text small { font-size: .74rem; color: var(--ink-500); white-space: nowrap; }

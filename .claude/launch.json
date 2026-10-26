@@ -4,8 +4,14 @@
     {
       "name": "portfolio",
       "runtimeExecutable": ".venv/Scripts/python.exe",
-      "runtimeArgs": ["-m", "uvicorn", "app:app", "--host", "127.0.0.1", "--port", "8000"],
+      "runtimeArgs": ["-m", "uvicorn", "app:app", "--host", "127.0.0.1", "--port", "8000", "--reload"],
       "port": 8000
+    },
+    {
+      "name": "portfolio-dist",
+      "runtimeExecutable": ".venv/Scripts/python.exe",
+      "runtimeArgs": ["-m", "http.server", "8001", "--directory", "dist", "--bind", "127.0.0.1"],
+      "port": 8001
     }
   ]
 }

@@ -28,6 +28,10 @@ def t(value, lang):
 PROFILE = {
     "name": "Lê Hiếu Kỳ",
     "initials": "HK",
+    # Logo o thanh nav. De "" -> quay ve dau hieu chu cai (initials).
+    # Neu file khong ton tai thi trang tu dong quay ve initials, khong bi vo layout.
+    "logo": "/static/img/zyxel-networks.png",
+    "logo_alt": "Zyxel Networks",
     "role": {
         "en": "System Integration Engineer",
         "vi": "Kỹ sư Tích hợp Hệ thống",

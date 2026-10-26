@@ -12,19 +12,38 @@
 <meta property="og:type" content="profile">
 <meta property="og:title" content="{{ profile.name }} — {{ profile.role }}">
 <meta property="og:description" content="{{ ui.meta_description }}">
-<meta property="og:url" content="{{ profile.website }}">
+<meta property="og:url" content="{{ canonical }}">
 <meta property="og:locale" content="{{ 'vi_VN' if lang == 'vi' else 'en_US' }}">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="{{ profile.website }}">
-<link rel="alternate" hreflang="en" href="{{ profile.website }}/?lang=en">
-<link rel="alternate" hreflang="vi" href="{{ profile.website }}/?lang=vi">
-<link rel="icon" href="/static/img/favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="{{ canonical }}">
+<link rel="alternate" hreflang="en" href="{{ alternates.en }}">
+<link rel="alternate" hreflang="vi" href="{{ alternates.vi }}">
+<link rel="alternate" hreflang="x-default" href="{{ alternates.en }}">
+<link rel="icon" href="{{ asset('/static/img/favicon.svg') }}" type="image/svg+xml">
+
+{# Nho ngon ngu da chon (ban tinh khong co cookie phia server nen dung localStorage),
+   dong thoi do link cu dang "?lang=vi" ve dung /vi/.
+   Chi chuyen huong tu "/" sang "/vi/", khong bao gio nguoc lai -> khong the lap vo tan. #}
+<script>
+(function () {
+  if (location.pathname !== "/") return;
+  var q = new URLSearchParams(location.search).get("lang");
+  try {
+    if (q === "en" || q === "vi") localStorage.setItem("lang", q);
+  } catch (e) {}
+  var want = q;
+  if (want !== "en" && want !== "vi") {
+    try { want = localStorage.getItem("lang"); } catch (e) { want = null; }
+  }
+  if (want === "vi") location.replace("/vi/" + location.hash);
+})();
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/static/css/style.css">
+<link rel="stylesheet" href="{{ asset('/static/css/style.css') }}">
 </head>
 
 <body>
@@ -34,7 +53,12 @@
 <header class="nav" id="nav">
   <div class="nav__inner">
     <a class="brand" href="#top" aria-label="{{ profile.name }}">
+      {% if profile.logo %}
+      <img class="brand__logo" id="brandLogo" src="{{ asset(profile.logo) }}" alt="{{ profile.logo_alt }}"
+           width="130" height="51" data-fallback="{{ profile.initials }}">
+      {% else %}
       <span class="brand__mark" aria-hidden="true">{{ profile.initials }}</span>
+      {% endif %}
       <span class="brand__text">
         <strong>{{ profile.name }}</strong>
         <small>{{ profile.role }}</small>
@@ -47,8 +71,8 @@
       <a href="#experience">{{ ui.nav.experience }}</a>
       <a href="#projects">{{ ui.nav.projects }}</a>
       <a class="nav__cta" href="#contact">{{ ui.nav.contact }}</a>
-      <a class="lang-toggle" href="?lang={{ other_lang }}" hreflang="{{ other_lang }}"
-         title="{{ ui.lang_switch_to }}" rel="alternate">
+      <a class="lang-toggle" href="{{ urls[other_lang] }}" hreflang="{{ other_lang }}"
+         title="{{ ui.lang_switch_to }}" rel="alternate" data-lang="{{ other_lang }}">
         {{ icon('lang', 16) }}<span>{{ ui.lang_switch_code }}</span>
       </a>
     </nav>
@@ -93,7 +117,7 @@
         <a class="btn btn--primary" href="#contact">{{ ui.hero.cta_contact }} {{ icon('arrow-right', 17) }}</a>
         <a class="btn btn--ghost" href="#projects">{{ ui.hero.cta_projects }}</a>
         {% if profile.cv_url %}
-        <a class="btn btn--ghost" href="/cv" target="_blank" rel="noopener">{{ icon('download', 17) }} {{ ui.hero.cta_cv }}</a>
+        <a class="btn btn--ghost" href="{{ profile.cv_url }}" target="_blank" rel="noopener">{{ icon('download', 17) }} {{ ui.hero.cta_cv }}</a>
         {% endif %}
       </div>
 
@@ -377,6 +401,6 @@
   {{ icon('arrow-up', 18) }}
 </a>
 
-<script src="/static/js/main.js" defer></script>
+<script src="{{ asset('/static/js/main.js') }}" defer></script>
 </body>
 </html>
