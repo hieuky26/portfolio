@@ -56,8 +56,11 @@ document.documentElement.classList.add("js");
   <div class="wrap bar">
     <a class="brand" href="#top">
       {% if profile.logo %}
-      <img id="brandLogo" src="{{ asset(profile.logo) }}" alt="{{ profile.logo_alt }}"
-           width="132" height="48" data-fallback="{{ profile.initials }}">
+      <picture>
+        {% if profile.logo_dark %}<source srcset="{{ asset(profile.logo_dark) }}" media="(prefers-color-scheme: dark)">{% endif %}
+        <img id="brandLogo" src="{{ asset(profile.logo) }}" alt="{{ profile.logo_alt }}"
+             width="132" height="48" data-fallback="{{ profile.initials }}">
+      </picture>
       {% else %}
       <span class="brand__mark" aria-hidden="true">{{ profile.initials }}</span>
       {% endif %}
