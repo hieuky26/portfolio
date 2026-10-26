@@ -1,7 +1,7 @@
 # Portfolio — Lê Hiếu Kỳ
 
 Trang portfolio một trang, song ngữ EN/VI.
-Giao diện theo hệ màu thương hiệu Zyxel (primary `#288719`, accent `#6CBE45`, font Inter / Noto Sans).
+Giao diện theo Zyxel Networks Brand Guidelines (08/2026): xanh `#64BE00`, chữ `#1A1A1A`, logo luôn trên nền trắng; font Be Vietnam Pro + JetBrains Mono; có dark mode.
 
 Live: https://hieuky.is-a.dev
 
@@ -94,10 +94,9 @@ sitegen.py              Logic dùng chung cho app.py và build.py
 content.py              Dữ liệu nội dung
 ui.py                   Nhãn giao diện theo ngôn ngữ
 templates/index.html    Trang chính
-templates/_icons.html   Macro icon SVG
 static/css/style.css    Design tokens + toàn bộ giao diện
-static/js/main.js       Nav, reveal khi cuộn, panel kỹ năng, nút copy, nhớ ngôn ngữ
-static/img/             favicon + logo
+static/js/main.js       Tab kỹ năng, reveal khi cuộn, menu mobile, nút copy, nhớ ngôn ngữ
+static/img/             favicon + logo Zyxel (SVG, tách từ brand guideline)
 ```
 
 > Không đặt tên file là `site.py` — trùng với module chuẩn của Python và sẽ che mất nó.

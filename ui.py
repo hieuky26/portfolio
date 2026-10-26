@@ -6,7 +6,10 @@ UI = {
         "lang_name": "English",
         "lang_switch_to": "Tiếng Việt",
         "lang_switch_code": "VI",
+        "skip": "Skip to content",
         "nav": {
+            "label": "Main",
+            "menu": "Menu",
             "about": "About",
             "skills": "Skills",
             "experience": "Experience",
@@ -14,28 +17,19 @@ UI = {
             "contact": "Contact",
         },
         "hero": {
-            # De trong = an huy hieu o hero. Dien chu vao la hien lai (vd "Open to opportunities").
-            "available": "",
+            "at": "at",
             "cta_contact": "Get in touch",
             "cta_projects": "View projects",
             "cta_cv": "Download CV",
-            "scroll": "Scroll",
         },
         "sections": {
-            "about_eyebrow": "About",
             "about_title": "A short introduction",
-            "skills_eyebrow": "Skills",
             "skills_title": "What I work with",
+            "skills_tabs": "Skill groups",
             "skills_hint": "Select a skill to see the detail.",
-            "skills_empty_title": "Pick a skill",
-            "skills_empty_text": "Click any item above and the detail shows up here.",
-            "experience_eyebrow": "Experience",
             "experience_title": "Where I have worked",
-            "education_eyebrow": "Education",
             "education_title": "Education",
-            "projects_eyebrow": "Projects",
             "projects_title": "Selected work",
-            "contact_eyebrow": "Contact",
             "contact_title": "Let's talk",
             "contact_text": "The fastest way to reach me is email. I usually reply within a day.",
         },
@@ -51,14 +45,15 @@ UI = {
             "view_project": "View project",
             "copy": "Copy",
             "copied": "Copied",
+            "copy_failed": "Copy it manually",
             "back_to_top": "Back to top",
         },
         "footer": {
-            "built": "Built with FastAPI and Jinja2. Deployed on Render.",
+            "built": "Built with Python and Jinja2. Deployed on Netlify.",
             "rights": "All rights reserved.",
         },
         "meta_description": (
-            "Portfolio of Lê Hiếu Kỳ — System integration engineer at Zyxel Networks Vietnam, "
+            "Portfolio of Lê Hiếu Kỳ, system integration engineer at Zyxel Networks Vietnam, "
             "working on Wi-Fi infrastructure, Linux deployments and Python automation."
         ),
     },
@@ -66,7 +61,10 @@ UI = {
         "lang_name": "Tiếng Việt",
         "lang_switch_to": "English",
         "lang_switch_code": "EN",
+        "skip": "Bỏ qua điều hướng",
         "nav": {
+            "label": "Chính",
+            "menu": "Menu",
             "about": "Giới thiệu",
             "skills": "Kỹ năng",
             "experience": "Kinh nghiệm",
@@ -74,28 +72,19 @@ UI = {
             "contact": "Liên hệ",
         },
         "hero": {
-            # De trong = an huy hieu o hero. Dien chu vao la hien lai.
-            "available": "",
+            "at": "tại",
             "cta_contact": "Liên hệ",
             "cta_projects": "Xem dự án",
             "cta_cv": "Tải CV",
-            "scroll": "Cuộn xuống",
         },
         "sections": {
-            "about_eyebrow": "Giới thiệu",
             "about_title": "Đôi dòng về tôi",
-            "skills_eyebrow": "Kỹ năng",
             "skills_title": "Công nghệ tôi làm việc cùng",
+            "skills_tabs": "Nhóm kỹ năng",
             "skills_hint": "Chọn một kỹ năng để xem chi tiết.",
-            "skills_empty_title": "Chọn một kỹ năng",
-            "skills_empty_text": "Bấm vào một mục phía trên, phần chi tiết sẽ hiện ở đây.",
-            "experience_eyebrow": "Kinh nghiệm",
             "experience_title": "Quá trình làm việc",
-            "education_eyebrow": "Học vấn",
             "education_title": "Học vấn",
-            "projects_eyebrow": "Dự án",
             "projects_title": "Một số dự án tiêu biểu",
-            "contact_eyebrow": "Liên hệ",
             "contact_title": "Kết nối với tôi",
             "contact_text": "Cách nhanh nhất để liên hệ là qua email. Tôi thường phản hồi trong vòng một ngày.",
         },
@@ -110,15 +99,16 @@ UI = {
             "featured": "Nổi bật",
             "view_project": "Xem dự án",
             "copy": "Sao chép",
-            "copied": "Đã chép",
+            "copied": "Đã sao chép",
+            "copy_failed": "Hãy sao chép thủ công",
             "back_to_top": "Lên đầu trang",
         },
         "footer": {
-            "built": "Xây dựng bằng FastAPI và Jinja2. Triển khai trên Render.",
+            "built": "Xây dựng bằng Python và Jinja2. Triển khai trên Netlify.",
             "rights": "Bảo lưu mọi quyền.",
         },
         "meta_description": (
-            "Portfolio của Lê Hiếu Kỳ — Kỹ sư tích hợp hệ thống tại Zyxel Networks Việt Nam, "
+            "Portfolio của Lê Hiếu Kỳ, kỹ sư tích hợp hệ thống tại Zyxel Networks Việt Nam, "
             "làm về hạ tầng Wi-Fi, triển khai Linux và tự động hoá bằng Python."
         ),
     },

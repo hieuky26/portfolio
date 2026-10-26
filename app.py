@@ -2,7 +2,7 @@
 """
 Portfolio - Lê Hiếu Kỳ — server dev.
 
-Trang that chay o dang HTML tinh tren Cloudflare Pages (xem build.py).
+Trang that chay o dang HTML tinh tren Netlify (xem build.py).
 File nay chi dung khi lam viec o may: co reload, co ?lang=, co cookie.
 
 Noi dung: sua trong content.py
