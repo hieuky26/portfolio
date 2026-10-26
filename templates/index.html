@@ -249,8 +249,8 @@ document.documentElement.classList.add("js");
     <div class="mailrow reveal">
       <a class="mail" href="mailto:{{ profile.email }}">{{ profile.email }}</a>
       <button class="btn" type="button" aria-live="polite" data-copy="{{ profile.email }}"
-              data-label="{{ ui.labels.copy }}" data-done="{{ ui.labels.copied }}"
-              data-fail="{{ ui.labels.copy_failed }}">{{ ui.labels.copy }}</button>
+              data-label="{{ ui.labels['copy'] }}" data-done="{{ ui.labels.copied }}"
+              data-fail="{{ ui.labels.copy_failed }}">{{ ui.labels['copy'] }}</button>
     </div>
     <dl class="meta reveal">
       <div><dt>{{ ui.labels.email }}</dt><dd>{{ profile.email }}</dd></div>
