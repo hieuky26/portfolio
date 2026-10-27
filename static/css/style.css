@@ -120,11 +120,21 @@ nav a.lang { border: 1px solid var(--line); color: var(--ink); }
   padding: .5rem 1rem; border: 1px solid var(--line); border-radius: 999px; font-size: .92rem;
 }
 .menu summary::-webkit-details-marker { display: none; }
+.menu[open] summary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+/* Menu mobile nam trong <details>, khong phai <nav>, nen can style rieng */
 .menu ul {
-  position: absolute; right: 0; top: calc(100% + .5rem); min-width: 210px;
-  background: var(--bg); border: 1px solid var(--line); border-radius: var(--r);
-  padding: .5rem; flex-direction: column; align-items: stretch;
+  position: absolute; right: 0; top: calc(100% + .6rem); z-index: 30; min-width: 220px;
+  list-style: none; margin: 0; padding: .5rem;
+  display: flex; flex-direction: column; gap: .15rem;
+  background: var(--bg); border: 1px solid var(--line); border-radius: 16px;
+  box-shadow: 0 18px 40px -16px rgb(0 0 0 / .3);
 }
+.menu a {
+  display: block; padding: .7rem 1rem; border-radius: 10px;
+  text-decoration: none; font-size: 1rem; color: var(--ink);
+}
+.menu a:hover, .menu a:focus-visible { background: var(--surface); }
+.menu li:last-child { margin-top: .25rem; padding-top: .25rem; border-top: 1px solid var(--line); }
 @media (max-width: 860px) { .desk { display: none; } .menu { display: block; } }
 @media (max-width: 520px) { .brand small { display: none; } }
 
@@ -401,6 +411,46 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 }
 @media (prefers-reduced-motion: reduce) {
   .panel:not([hidden]), .detail.swap span { animation: none; }
+}
+
+/* ---------- Dien thoai ---------- */
+@media (max-width: 600px) {
+  .wrap { width: min(100% - 2rem, var(--max)); }
+
+  /* Hero cao theo noi dung thay vi bang ca man hinh */
+  .hero { min-height: 0; padding-block: 2.5rem 3.5rem; }
+  h1 { margin: .75rem 0 1rem; }
+  .hero .lead { font-size: 1.1rem; }
+  .cta-row { margin-top: 1.5rem; }
+  .cta-row .btn { flex: 1 1 auto; justify-content: center; }
+
+  /* Khung stack nam duoi terminal, khong de len chu */
+  .term-wrap { padding: 0; }
+  .term__stack { position: relative; left: auto; bottom: auto; max-width: none; margin: -.75rem 1rem 0; }
+  .term__body { padding: 1rem 1rem 1.5rem; }
+
+  .statement { font-size: 1.05rem; }
+  .facts { gap: 1rem; margin-top: 2rem; }
+
+  /* Tab ky nang xuong dong thay vi cuon ngang */
+  .tabs { gap: 1rem; margin-top: 1.75rem; }
+  .tablist { flex-wrap: wrap; overflow: visible; gap: .4rem; padding-bottom: 0; }
+  .tablist button { padding: .5rem .9rem; font-size: .9rem; border-color: var(--line); background: var(--bg); }
+  .panel { padding: 1.25rem; min-height: 0; gap: 1.25rem; }
+  .chip { font-size: .88rem; padding: .45rem .85rem; }
+
+  .job { padding-block: 1.75rem; }
+  .bul li { margin-bottom: .5rem; }
+
+  .bento { margin-top: 2rem; gap: .75rem; }
+  .tile { padding: 1.25rem; }
+  .t-a h3, .t-b h3 { font-size: 1.3rem; }
+  .tile h3 { font-size: 1.15rem; }
+
+  .mailrow { margin-top: 1.5rem; gap: .75rem; }
+  .mail { font-size: 1.45rem; }
+  .meta { gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; }
+  footer .wrap { flex-direction: column; }
 }
 
 /* ---------- In / xuat PDF (Ctrl+P) dung lam CV nhanh ---------- */
