@@ -339,6 +339,81 @@ h1 span {
 .edu h3 { font-size: 1.3rem; }
 .edu p { color: var(--muted); }
 
+/* ---------- Cong cu tai Zyxel: moi cong cu mot the lon (anh + noi dung + so lieu) ---------- */
+.tools-intro { margin-top: 1rem; }
+.case {
+  display: grid; grid-template-columns: 7fr 5fr; gap: 1.5rem 2.5rem;
+  grid-template-areas: "shot body" "metrics metrics" "tech tech";
+  margin-top: 2.5rem; padding: clamp(1.25rem, 3vw, 2.25rem);
+  background: var(--bg); border: 1px solid var(--line); border-radius: var(--r);
+}
+.case--flip { grid-template-columns: 5fr 7fr; grid-template-areas: "body shot" "metrics metrics" "tech tech"; }
+.shot { grid-area: shot; margin: 0; align-self: start; }
+.shot img {
+  display: block; width: 100%; height: auto;
+  border: 1px solid var(--line); border-radius: 12px;
+  box-shadow: 0 20px 40px -24px rgb(20 40 0 / .35);
+}
+.case__body { grid-area: body; display: flex; flex-direction: column; gap: .75rem; }
+.case .kind { font: 500 .8rem/1.4 var(--mono); color: var(--muted); }
+.case h3 { font-size: clamp(1.3rem, 2.4vw, 1.6rem); }
+.case__summary { color: var(--ink); }
+.case .bul { margin: 0; color: var(--muted); }
+.case .bul li { margin-bottom: .4rem; }
+.case__note { color: var(--muted); }
+.case__link { font-weight: 600; align-self: flex-start; }
+
+/* Trang thai: cham xanh nhap nhay nhe */
+.status { display: flex; align-items: center; gap: .55rem; font-size: .9rem; font-weight: 600; }
+.status span {
+  width: .55rem; height: .55rem; border-radius: 50%; flex: none;
+  background: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.metrics {
+  grid-area: metrics; display: grid; grid-template-columns: repeat(4, 1fr); gap: .75rem;
+  margin: 0; padding-top: 1.5rem; border-top: 1px solid var(--line);
+}
+.metrics div { display: flex; flex-direction: column-reverse; gap: .2rem; }
+.metrics dd { margin: 0; font: 700 clamp(1.5rem, 3vw, 2.1rem)/1.1 var(--font); letter-spacing: -.02em; }
+.metrics dt { color: var(--muted); font-size: .85rem; }
+.case__tech { grid-area: tech; }
+
+/* Bitrix24: noi dung trai, luoi 6 viec phai */
+.case--grid { grid-template-areas: "body tasks"; grid-template-columns: 4fr 7fr; }
+.case--grid .chips { margin-top: auto; }
+.tasks {
+  grid-area: tasks; list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem;
+}
+.tasks li {
+  display: flex; flex-direction: column; gap: .3rem;
+  padding: 1rem 1.1rem; border-radius: 14px; background: var(--surface);
+}
+.tasks li:first-child { background: var(--tint); }
+.tasks b { font-weight: 650; }
+.tasks span { color: var(--muted); font-size: .92rem; }
+
+/* Ke hoach tiep theo: the vien net dut */
+.next {
+  margin-top: 1.5rem; padding: clamp(1.25rem, 3vw, 1.75rem);
+  border: 1.5px dashed color-mix(in srgb, var(--accent) 60%, var(--line)); border-radius: var(--r);
+  display: grid; gap: .5rem;
+}
+.next__tag { font: 500 .8rem/1.4 var(--mono); color: var(--muted); }
+.next h3 { font-size: 1.2rem; }
+.next p { color: var(--muted); max-width: 70ch; }
+
+@media (max-width: 900px) {
+  .case, .case--flip { grid-template-columns: 1fr; grid-template-areas: "shot" "body" "metrics" "tech"; }
+  .case--grid { grid-template-columns: 1fr; grid-template-areas: "body" "tasks"; }
+  .metrics { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+}
+@media (max-width: 600px) {
+  .case { margin-top: 1.75rem; gap: 1.25rem; }
+  .tasks { grid-template-columns: 1fr; }
+}
+
 /* ---------- Du an: bento 5 o ---------- */
 .bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem; margin-top: 3rem; }
 .tile {

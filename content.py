@@ -214,10 +214,14 @@ EXPERIENCE = [
              "vi": "Xây công cụ nội bộ đẩy template lệnh CLI xuống hàng trăm access point và switch qua SSH, bắt buộc dry-run và ghi log từng thiết bị."},
             {"en": "Handle captive-portal and RADIUS authentication issues end to end, from client association to the SQL backend.",
              "vi": "Xử lý trọn vẹn sự cố captive portal và xác thực RADIUS, từ lúc client kết nối tới backend SQL."},
+            {"en": "Built the Zyxel Helpdesk (GLPI) and the Shipment Calculator to replace the Excel files used for demo stock, RMA and shipments.",
+             "vi": "Xây Zyxel Helpdesk (GLPI) và Shipment Calculator thay các file Excel theo dõi kho demo, RMA và tính shipment."},
+            {"en": "Set up Bitrix24 workflows and integrations: real-time attendance sync, devices by serial, approvals and auto-generated CO/CQ.",
+             "vi": "Dựng quy trình và tích hợp trên Bitrix24: đồng bộ chấm công tức thời, thiết bị theo serial, quy trình duyệt và tự sinh CO/CQ."},
             {"en": "Automate recurring reporting so weekly status decks are generated from task notes instead of assembled by hand.",
              "vi": "Tự động hoá báo cáo định kỳ: slide báo cáo tuần được sinh từ ghi chú công việc thay vì làm thủ công."},
         ],
-        "tech": ["Ubuntu", "Python", "SSH", "FreeRADIUS", "MongoDB", "Nginx", "MySQL"],
+        "tech": ["Ubuntu", "Python", "SSH", "FreeRADIUS", "MongoDB", "Nginx", "MySQL", "GLPI", "Docker", "Bitrix24"],
     },
     {
         "company": "NewAI",
@@ -248,6 +252,143 @@ EDUCATION = [
                  "vi": "Tập trung vào xử lý dữ liệu, học máy và hệ thống web."},
     },
 ]
+
+
+# --------------------------------------------------------------------------
+# 4b. CONG CU TAI ZYXEL (lay tu slide "Digitalizing daily operations at Zyxel Vietnam", 11/2026)
+#     Chi dua noi dung cong khai duoc: KHONG dua so lieu kho/RMA noi bo, IP, may chu,
+#     tinh trang bao mat hay anh man hinh noi bo len day.
+# --------------------------------------------------------------------------
+ZYXEL_TOOLS = {
+    "intro": {
+        "en": "Many daily processes at the Vietnam office still ran on Excel files. "
+              "These are the tools I built to replace them.",
+        "vi": "Nhiều quy trình hằng ngày ở văn phòng Việt Nam vẫn chạy trên file Excel. "
+              "Đây là những công cụ tôi xây để thay thế chúng.",
+    },
+    "cases": [
+        {
+            "name": "Zyxel Helpdesk",
+            "kind": {"en": "Web · support, demo loans and RMA", "vi": "Web · hỗ trợ, mượn demo và RMA"},
+            "summary": {
+                "en": "One system for customers, engineers and the warehouse, replacing the Excel "
+                      "trackers for demo stock and RMA units.",
+                "vi": "Một hệ thống chung cho khách hàng, kỹ sư và kho, thay cho các file Excel "
+                      "theo dõi kho demo và thiết bị RMA.",
+            },
+            "image": "/static/img/work/helpdesk-portal.webp",
+            "image_w": 1280, "image_h": 915,
+            "image_alt": {"en": "Zyxel Helpdesk public portal", "vi": "Cổng hỗ trợ công khai của Zyxel Helpdesk"},
+            "link": "https://support.zyxel.net.vn",
+            "link_label": "support.zyxel.net.vn",
+            "points": [
+                {"en": "Customers send support, demo-loan or RMA requests without logging in, then follow "
+                       "them with a tracking code.",
+                 "vi": "Khách hàng gửi yêu cầu hỗ trợ, mượn demo hoặc bảo hành mà không cần đăng nhập, "
+                       "rồi theo dõi bằng mã tracking."},
+                {"en": "Staff work tickets with SLA (support 4 h, RMA 1 day), one record per serial, "
+                       "a loan workflow and a read-only status log.",
+                 "vi": "Nhân viên xử lý ticket có SLA (hỗ trợ 4 giờ, RMA 1 ngày), quản lý theo serial, "
+                       "cho mượn và nhật ký trạng thái không sửa được."},
+                {"en": "RMA units are tracked step by step to and from HQ; any list exports to PDF or "
+                       "Excel in the Zyxel template.",
+                 "vi": "Thiết bị RMA được theo dõi từng bước đi và về từ HQ; mọi danh sách xuất PDF, "
+                       "Excel theo mẫu Zyxel."},
+                {"en": "Built on GLPI 12 with no core changes: all customisation lives in 3 custom plugins, "
+                       "behind an Nginx gateway, with MySQL in Docker.",
+                 "vi": "Nền GLPI 12, không sửa lõi: toàn bộ tuỳ biến nằm trong 3 plugin tự viết, "
+                       "chạy sau Nginx, MySQL trong Docker."},
+            ],
+            "metrics": [
+                {"value": "3", "label": {"en": "custom plugins", "vi": "plugin tự viết"}},
+                {"value": "~7.8k", "label": {"en": "lines of code", "vi": "dòng code"}},
+                {"value": "36", "label": {"en": "FAQ articles in Vietnamese", "vi": "bài FAQ tiếng Việt"}},
+                {"value": {"en": "~2 wks", "vi": "~2 tuần"}, "label": {"en": "to build", "vi": "để xây dựng"}},
+            ],
+            "status": {"en": "Stock and RMA data live · ticketing in pilot",
+                       "vi": "Dữ liệu kho, RMA đang dùng thật · ticket đang thử nghiệm"},
+            "tech": ["GLPI 12", "PHP plugins", "Nginx", "MySQL 8.4", "Docker"],
+        },
+        {
+            "name": "Zyxel Shipment Calculator",
+            "kind": {"en": "Windows app + web", "vi": "Ứng dụng Windows + bản web"},
+            "summary": {
+                "en": "Weight and volume for multi-list shipments, replacing the \"TÍNH SHIPMENT\" "
+                      "Excel sheet. Type or paste a list and the totals are ready.",
+                "vi": "Tính khối lượng và thể tích cho lô hàng nhiều list, thay sheet Excel "
+                      "\"TÍNH SHIPMENT\". Gõ hoặc dán danh sách là có kết quả ngay.",
+            },
+            "image": "/static/img/work/shipment-calculator.webp",
+            "image_w": 1400, "image_h": 840,
+            "image_alt": {"en": "Shipment Calculator result screen", "vi": "Màn hình kết quả của Shipment Calculator"},
+            "link": "",
+            "points": [
+                {"en": "Type a model with suggestions or paste a whole order, instead of picking each SKU "
+                       "from a ~636-item dropdown.",
+                 "vi": "Gõ model có gợi ý hoặc dán cả đơn hàng, thay vì chọn từng SKU trong khoảng 636 mã."},
+                {"en": "Add shipping lists freely; totals and the Excel export keep the same layout as the old sheet.",
+                 "vi": "Thêm shipping list tuỳ ý; tổng và file Excel xuất ra giữ đúng mẫu cũ."},
+                {"en": "Known unit errors in the source data (600 kg instead of 0.6 kg) are fixed automatically.",
+                 "vi": "Tự sửa lỗi đơn vị trong DATA nguồn (600 kg thay vì 0,6 kg)."},
+                {"en": "SKUs with missing data are flagged red and kept out of the totals instead of being miscounted.",
+                 "vi": "Mã thiếu dữ liệu được báo đỏ và không cộng vào tổng, thay vì bị cộng nhầm."},
+            ],
+            "metrics": [
+                {"value": "636", "label": {"en": "SKUs · 288 models", "vi": "SKU · 288 model"}},
+                {"value": "11/11", "label": {"en": "automated tests pass", "vi": "test tự động đạt"}},
+                {"value": "3", "label": {"en": "data errors auto-fixed", "vi": "lỗi DATA tự sửa"}},
+                {"value": {"en": "1 step", "vi": "1 bước"}, "label": {"en": "install · offline", "vi": "cài đặt · chạy offline"}},
+            ],
+            "status": {"en": "v2.0.0 delivered to first users", "vi": "Bản 2.0.0 đã đến tay người dùng đầu tiên"},
+            "tech": ["Windows", "Web", "Excel export", "Automated tests"],
+        },
+    ],
+    # Viec tren Bitrix24 (CRM va mang noi bo cua cong ty)
+    "bitrix": {
+        "name": "Bitrix24",
+        "kind": {"en": "CRM · workflows and integrations", "vi": "CRM · quy trình và tích hợp"},
+        "summary": {
+            "en": "Workflows, integrations and user guides on the company's CRM and intranet.",
+            "vi": "Quy trình, tích hợp và tài liệu hướng dẫn trên CRM và mạng nội bộ của công ty.",
+        },
+        "items": [
+            {"title": {"en": "Attendance sync", "vi": "Đồng bộ chấm công"},
+             "text": {"en": "ZKTeco device → Cloudflare free tier → Bitrix24, one row per person per day. "
+                            "Live since 01/07/2026, no office PC running 24/7.",
+                      "vi": "Máy ZKTeco → Cloudflare (gói miễn phí) → Bitrix24, mỗi người mỗi ngày một dòng. "
+                            "Chạy từ 01/07/2026, bỏ hẳn máy tính bật 24/7."}},
+            {"title": {"en": "Devices by serial", "vi": "Thiết bị theo serial"},
+             "text": {"en": "Devices and warranty in Smart Processes with 8 automation rules.",
+                      "vi": "Thiết bị và bảo hành bằng Smart Process, 8 quy tắc tự động."}},
+            {"title": {"en": "Approval workflows", "vi": "Quy trình duyệt"},
+             "text": {"en": "Demo loans, warranty swaps and contracts.",
+                      "vi": "Mượn demo, đổi bảo hành và hợp đồng."}},
+            {"title": {"en": "Auto documents", "vi": "Tự sinh văn bản"},
+             "text": {"en": "CO/CQ certificates generated from Zyxel templates.",
+                      "vi": "CO/CQ sinh tự động theo mẫu Zyxel."}},
+            {"title": {"en": "Project P&L", "vi": "Lãi lỗ dự án"},
+             "text": {"en": "Profit and loss per project on Bitrix24 instead of Excel.",
+                      "vi": "Lãi lỗ từng dự án trên Bitrix24 thay file Excel."}},
+            {"title": {"en": "Sell-out import", "vi": "Nhập Sell-out"},
+             "text": {"en": "Excel helper links serials, tax codes and sales, then builds a ready-to-import CSV.",
+                      "vi": "File Excel công cụ tự nối serial, mã số thuế, sale và tạo sẵn CSV để import."}},
+        ],
+        "note": {"en": "Plus 5 step-by-step user guides with 90 annotated screenshots.",
+                 "vi": "Kèm 5 tài liệu hướng dẫn từng bước, 90 ảnh minh hoạ."},
+        "tech": ["Bitrix24", "Smart Processes", "Cloudflare", "ZKTeco"],
+    },
+    # Ke hoach tiep theo
+    "next": {
+        "label": {"en": "Next", "vi": "Tiếp theo"},
+        "title": {"en": "On-premise monitoring with LibreNMS",
+                  "vi": "Giám sát thiết bị Zyxel on-premise bằng LibreNMS"},
+        "text": {"en": "One self-hosted dashboard for the health of our Zyxel devices: SNMP auto-discovery, "
+                       "status and traffic graphs, alerts when a device goes down. No licence cost.",
+                 "vi": "Một màn hình tự host theo dõi tình trạng các thiết bị Zyxel: tự tìm thiết bị qua SNMP, "
+                       "biểu đồ trạng thái và băng thông, cảnh báo khi thiết bị mất kết nối. Không tốn bản quyền."},
+        "status": {"en": "Planning", "vi": "Đang lên kế hoạch"},
+    },
+}
 
 
 # --------------------------------------------------------------------------
