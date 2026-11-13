@@ -27,11 +27,12 @@ def t(value, lang):
 # --------------------------------------------------------------------------
 PROFILE = {
     "name": "Lê Hiếu Kỳ",
+    "birth": "26/08/2001",
     "initials": "HK",
-    # Anh chan dung muc Gioi thieu (da tach nen, dat tren nen toi 4:5)
+    # Anh chan dung muc Gioi thieu (selfie 4:5, da che camera)
     "photo": "/static/img/portrait.webp",
     "photo_w": 900,
-    "photo_h": 1143,
+    "photo_h": 1125,
     "role": {
         "en": "System Integration Engineer",
         "vi": "Kỹ sư Tích hợp Hệ thống",

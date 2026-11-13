@@ -126,6 +126,7 @@ document.documentElement.classList.add("js");
       <p class="statement">{{ profile.about }}</p>
       <dl class="info">
         <div><dt>{{ ui.labels.name }}</dt><dd>{{ profile.name }}</dd></div>
+        <div><dt>{{ ui.labels.birth }}</dt><dd>{{ profile.birth }}</dd></div>
         <div><dt>{{ ui.labels.position }}</dt><dd>{{ profile.role }}</dd></div>
         {% if profile.company %}<div><dt>{{ ui.labels.company }}</dt><dd>{{ profile.company }}</dd></div>{% endif %}
         <div><dt>{{ ui.labels.location }}</dt><dd>{{ profile.location }}</dd></div>
