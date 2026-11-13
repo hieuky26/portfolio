@@ -6,8 +6,8 @@
 <title>{{ profile.name }} - {{ profile.role }}</title>
 <meta name="description" content="{{ ui.meta_description }}">
 <meta name="author" content="{{ profile.name }}">
-<meta name="theme-color" content="#64BE00">
-<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light">
 
 <meta property="og:type" content="profile">
 <meta property="og:title" content="{{ profile.name }} - {{ profile.role }}">
@@ -44,7 +44,7 @@ document.documentElement.classList.add("js");
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('/static/css/style.css') }}">
 </head>
 
@@ -54,18 +54,8 @@ document.documentElement.classList.add("js");
 <!-- ================= HEADER ================= -->
 <header class="top">
   <div class="wrap bar">
-    <a class="brand" href="#top">
-      {% if profile.logo %}
-      <picture>
-        {% if profile.logo_dark %}<source srcset="{{ asset(profile.logo_dark) }}" media="(prefers-color-scheme: dark)">{% endif %}
-        <img id="brandLogo" src="{{ asset(profile.logo) }}" alt="{{ profile.logo_alt }}"
-             width="132" height="48" data-fallback="{{ profile.initials }}">
-      </picture>
-      {% else %}
-      <span class="brand__mark" aria-hidden="true">{{ profile.initials }}</span>
-      {% endif %}
-      <span><b>{{ profile.name }}</b><small>{{ profile.role }}</small></span>
-    </a>
+    {# Wordmark ca nhan: chi ten, khong logo cong ty #}
+    <a class="brand" href="#top"><b>{{ profile.name }}</b><small>{{ profile.role }}</small></a>
 
     {% set nav_items = [
       ('#about', ui.nav.about), ('#skills', ui.nav.skills), ('#experience', ui.nav.experience),
@@ -113,27 +103,19 @@ document.documentElement.classList.add("js");
         {% endif %}
       </div>
     </div>
-    {# Khung terminal trang tri: du lieu o content.HERO_TERMINAL #}
-    <div class="term-wrap reveal" style="--d:.2s" aria-hidden="true">
-      <div class="term">
-        <div class="term__bar"><i></i><i></i><i></i><span>{{ terminal.title }}</span></div>
-        <ol class="term__body">
-          {% for kind, text in terminal.lines %}
-          <li class="ln ln--{{ kind }}" style="--i:{{ loop.index0 }}">{{ text }}</li>
-          {% endfor %}
-          <li class="ln ln--cmd ln--cursor" style="--i:{{ terminal.lines | length }}"><span></span></li>
-        </ol>
-      </div>
-      {% if terminal.stack %}
-      <ul class="term__stack">{% for s in terminal.stack %}<li>{{ s }}</li>{% endfor %}</ul>
-      {% endif %}
-    </div>
+    {# Anh that cua cac cong cu da lam (content.ZYXEL_TOOLS), xep chong le nhau #}
+    <a class="collage reveal" href="#tools" style="--d:.2s" aria-label="{{ ui.sections.tools_title }}">
+      {% for c in tools.cases[:2] %}
+      <img class="collage__{{ loop.index }}" src="{{ asset(c.image) }}" alt="{{ c.image_alt }}"
+           width="{{ c.image_w }}" height="{{ c.image_h }}"{% if loop.first %} fetchpriority="high"{% endif %}>
+      {% endfor %}
+    </a>
   </div>
 </section>
 
 <!-- ================= ABOUT ================= -->
 <section id="about">
-  <div class="wrap">
+  <div class="wrap about-grid">
     <h2 class="reveal">{{ ui.sections.about_title }}</h2>
     <p class="statement reveal">{{ profile.about }}</p>
     <dl class="facts reveal">
@@ -151,7 +133,7 @@ document.documentElement.classList.add("js");
   <div class="wrap">
     <h2 class="reveal">{{ ui.sections.skills_title }}</h2>
     <div class="tabs reveal">
-      <div class="tablist" role="tablist" aria-label="{{ ui.sections.skills_tabs }}" aria-orientation="vertical">
+      <div class="tablist" role="tablist" aria-label="{{ ui.sections.skills_tabs }}">
         {% for group in skills %}
         <button role="tab" type="button" id="t{{ loop.index }}" aria-controls="p{{ loop.index }}"
                 aria-selected="{{ 'true' if loop.first else 'false' }}"

@@ -28,13 +28,6 @@ def t(value, lang):
 PROFILE = {
     "name": "Lê Hiếu Kỳ",
     "initials": "HK",
-    # Logo o thanh nav. De "" -> quay ve dau hieu chu cai (initials).
-    # Neu file khong ton tai thi trang tu dong quay ve initials, khong bi vo layout.
-    # Logo Zyxel Networks dang SVG: ban chu den cho nen sang, ban chu trang cho dark mode
-    # (guideline cho phep ca hai, chon ban tuong phan nhat voi nen). X luon xanh #3C9F00.
-    "logo": "/static/img/zyxel-networks.svg",
-    "logo_dark": "/static/img/zyxel-networks-white.svg",
-    "logo_alt": "Zyxel Networks",
     "role": {
         "en": "System Integration Engineer",
         "vi": "Kỹ sư Tích hợp Hệ thống",
@@ -80,25 +73,6 @@ PROFILE = {
 #   {"value": "10+",  "label": {"en": "Systems deployed", "vi": "Hệ thống triển khai"}},
 # Tranh dung "so nam kinh nghiem" vi se lech voi moc 06/2026 o phan Kinh nghiem.
 STATS = []
-
-
-# Khung terminal trang tri o hero: mo phong mot lan chay dry-run cua cong cu SSH hang loat.
-# Moi dong: [kieu, chu]. Kieu: "cmd" lenh go vao, "info" dong xam, "ok" dong co dau tick xanh,
-# "done" dong ket qua. Giu moi dong duoi ~38 ky tu de khong tran tren dien thoai.
-HERO_TERMINAL = {
-    "title": "ssh-bulk: dry-run",
-    "lines": [
-        ["cmd", "ssh-bulk run vlan.j2 --dry-run"],
-        ["info", "sites.csv · 128 devices · 8 workers"],
-        ["ok", "AP-HCM-01     3 cmds   ok"],
-        ["ok", "AP-HCM-02     3 cmds   ok"],
-        ["ok", "SW-CORE-01    5 cmds   ok"],
-        ["info", "… 125 more"],
-        ["done", {"en": "passed · 0 blocked · log saved", "vi": "đạt · 0 lệnh bị chặn · đã lưu log"}],
-    ],
-    # Nhan nho o goc khung
-    "stack": ["Ubuntu", "FreeRADIUS", "Nginx", "MongoDB"],
-}
 
 
 # --------------------------------------------------------------------------

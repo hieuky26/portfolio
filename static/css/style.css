@@ -1,123 +1,91 @@
 /* ==========================================================================
    Portfolio - Le Hieu Ky
-   Mau theo Zyxel Networks Brand Guidelines (08/2026):
-     xanh   #64BE00 (Pantone 2287C, mau chu X trong logo)
-     den    #1A1A1A cho chu; chu tren nen xanh luon dung mau den (du tuong phan AA)
-   Logo: ban chu den tren nen sang, ban chu trang khi dark mode.
+   Nhan dien ca nhan (khong theo template Zyxel):
+     - Tone trang + vang gold, giao dien phang: khong bong do, khong nghieng, khong gradient.
+     - Font: Inter cho toan trang.
+     - Bo goc: the 16px, anh 12px, nut va chip bo tron han.
    ========================================================================== */
 
 :root {
-  --bg: #fff;
-  --surface: #F5F6F2;
-  --surface-2: #ECEFE6;
-  --ink: #1A1A1A;
-  --muted: #575C52;
-  --line: #DCDFD5;
-  --accent: #64BE00;
-  --on-accent: #1A1A1A;
-  --tint: color-mix(in srgb, var(--accent) 14%, var(--bg));
-  --block: #1A1A1A;
-  --on-block: #F1F3EE;
-  --r: 20px;
-  --max: 1120px;
-  --font: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #121412;
-    --surface: #1A1D19;
-    --surface-2: #232720;
-    --ink: #F1F3EE;
-    --muted: #A5AB9E;
-    --line: #2D322B;
-    --block: #20241D;
-  }
+  --bg: #FFFFFF;
+  --surface: #FAF8F3;         /* trang nga cho muc xen ke */
+  --surface-2: #F2EEE3;
+  --ink: #17150F;
+  --muted: #5C5A55;
+  --line: #E7E2D6;
+  --accent: #C9A227;          /* vang gold: nen nut, vach nhan */
+  --accent-ink: #8A6A10;      /* chu vang tren nen trang (tuong phan > 4.5:1) */
+  --on-accent: #17150F;
+  --tint: #FBF5E2;            /* nen vang rat nhat */
+  --r: 16px;
+  --r-img: 12px;
+  --max: 1180px;
+  --display: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "Inter", system-ui, sans-serif;
+  --ease: cubic-bezier(.16, 1, .3, 1);
 }
 
 /* ---------- Nen tang ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font: 400 1rem/1.7 var(--font);
+  font: 400 1rem/1.65 var(--font);
   -webkit-font-smoothing: antialiased;
 }
 
-a {
-  color: inherit;
-  text-decoration-color: var(--accent);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 4px;
-}
+a { color: inherit; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 4px; }
 a:focus-visible, button:focus-visible, summary:focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: 3px;
-  border-radius: 8px;
+  outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px;
 }
+::selection { background: var(--accent); color: var(--on-accent); }
 
-p, h1, h2, h3, ul, ol, dl, dd { margin: 0; }
-h1, h2, h3 { font-weight: 650; letter-spacing: -.02em; line-height: 1.2; }
-h2 { font-size: clamp(1.75rem, 3.2vw, 2.5rem); }
-/* Vach xanh ngan phia tren tieu de muc */
-section > .wrap > h2::before {
-  content: ""; display: block; width: 40px; height: 4px; border-radius: 4px;
-  background: var(--accent); margin-bottom: 1.1rem;
-}
+p, h1, h2, h3, ul, ol, dl, dd, figure { margin: 0; }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; letter-spacing: -.025em; line-height: 1.15; }
+h2 { font-size: clamp(2rem, 4vw, 3rem); }
 
-.wrap { width: min(100% - 2.5rem, var(--max)); margin-inline: auto; }
-section { padding-block: clamp(4rem, 9vw, 7rem); }
-.lead { color: var(--muted); max-width: 65ch; }
+.wrap { width: min(100% - 3rem, var(--max)); margin-inline: auto; }
+section { padding-block: clamp(4.5rem, 9vw, 7.5rem); }
+.alt { background: var(--surface); }
+.lead { color: var(--muted); max-width: 60ch; }
 .mono { font-family: var(--mono); font-size: .85rem; }
 
 .skip { position: absolute; left: -999px; }
 .skip:focus {
   left: 1rem; top: 1rem; z-index: 50;
-  background: var(--ink); color: var(--bg);
-  padding: .5rem 1rem; border-radius: 999px;
+  background: var(--ink); color: var(--bg); padding: .5rem 1rem; border-radius: 999px;
 }
 
 /* ---------- Header ---------- */
 .top {
   position: sticky; top: 0; z-index: 20;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: var(--bg);
   border-bottom: 1px solid var(--line);
 }
-.bar { height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.bar { height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 
-.brand { display: flex; align-items: center; gap: .75rem; text-decoration: none; }
-/* Logo nam thang tren nen header; dark mode tu doi sang ban chu trang (the <picture>) */
-.brand picture { display: block; }
-.brand img { height: 32px; width: auto; display: block; }
-.brand__mark {
-  display: grid; place-items: center;
-  width: 36px; height: 36px; border-radius: 10px;
-  background: var(--accent); color: var(--on-accent);
-  font-weight: 700; font-size: .9rem;
-}
-.brand b { display: block; font-weight: 650; line-height: 1.25; }
-.brand small { display: block; color: var(--muted); font-size: .78rem; line-height: 1.25; }
+.brand { display: flex; flex-direction: column; text-decoration: none; line-height: 1.2; }
+.brand b { font: 800 1.15rem/1.15 var(--display); letter-spacing: -.02em; }
+.brand small { font: 500 .72rem/1.3 var(--mono); color: var(--muted); }
 
-nav ul { list-style: none; padding: 0; display: flex; gap: .25rem; align-items: center; }
+nav ul { list-style: none; padding: 0; display: flex; gap: .15rem; align-items: center; }
 nav a {
-  display: block; padding: .5rem .85rem; border-radius: 999px;
+  display: block; padding: .45rem .8rem; border-radius: 999px;
   text-decoration: none; font-size: .92rem; color: var(--muted);
   transition: background .2s, color .2s;
 }
-nav a:hover { background: var(--surface); color: var(--ink); }
-nav a.lang { border: 1px solid var(--line); color: var(--ink); }
+nav a:hover { color: var(--ink); background: var(--surface-2); }
+nav a.lang { margin-left: .4rem; border: 1px solid var(--line); color: var(--ink); font-family: var(--mono); font-size: .8rem; }
 
 .menu { display: none; position: relative; }
 .menu summary {
   list-style: none; cursor: pointer;
-  padding: .5rem 1rem; border: 1px solid var(--line); border-radius: 999px; font-size: .92rem;
+  padding: .45rem 1rem; border: 1px solid var(--line); border-radius: 999px; font-size: .92rem;
 }
 .menu summary::-webkit-details-marker { display: none; }
 .menu[open] summary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
@@ -126,221 +94,136 @@ nav a.lang { border: 1px solid var(--line); color: var(--ink); }
   position: absolute; right: 0; top: calc(100% + .6rem); z-index: 30; min-width: 220px;
   list-style: none; margin: 0; padding: .5rem;
   display: flex; flex-direction: column; gap: .15rem;
-  background: var(--bg); border: 1px solid var(--line); border-radius: 16px;
-  box-shadow: 0 18px 40px -16px rgb(0 0 0 / .3);
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r);
 }
-.menu a {
-  display: block; padding: .7rem 1rem; border-radius: 10px;
-  text-decoration: none; font-size: 1rem; color: var(--ink);
-}
-.menu a:hover, .menu a:focus-visible { background: var(--surface); }
+.menu a { display: block; padding: .7rem 1rem; border-radius: 10px; text-decoration: none; color: var(--ink); }
+.menu a:hover, .menu a:focus-visible { background: var(--surface-2); }
 .menu li:last-child { margin-top: .25rem; padding-top: .25rem; border-top: 1px solid var(--line); }
-@media (max-width: 860px) { .desk { display: none; } .menu { display: block; } }
-@media (max-width: 520px) { .brand small { display: none; } }
+@media (max-width: 900px) { .desk { display: none; } .menu { display: block; } }
 
 /* ---------- Nut ---------- */
 .btn {
-  display: inline-flex; align-items: center; gap: .5rem;
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
   padding: .8rem 1.4rem; border-radius: 999px;
-  font: 600 1rem/1.2 var(--font); text-decoration: none; white-space: nowrap;
+  font: 600 .98rem/1.2 var(--font); text-decoration: none; white-space: nowrap;
   border: 1.5px solid var(--ink); background: transparent; color: var(--ink);
-  cursor: pointer; transition: transform .15s, background .2s;
+  cursor: pointer; transition: transform .2s var(--ease), background .2s, color .2s;
 }
-.btn:hover { background: var(--surface); }
+.btn:hover { background: var(--ink); color: var(--bg); }
 .btn:active { transform: scale(.98); }
 .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
-.btn.primary:hover { background: color-mix(in srgb, var(--accent) 86%, #fff); }
+.btn.primary:hover { background: var(--ink); border-color: var(--ink); color: var(--bg); }
 
-/* ---------- Hero ---------- */
-.hero { min-height: calc(100dvh - 68px); display: grid; align-items: center; padding-block: 3rem; }
-.hero .wrap {
-  display: grid; grid-template-columns: 7fr 5fr;
-  gap: clamp(2rem, 6vw, 5rem); align-items: center;
-}
-.eyebrow { font: 500 .9rem/1.5 var(--mono); color: var(--muted); }
+/* ---------- Hero: chu ben trai, anh cong cu that ben phai ---------- */
+.hero { min-height: calc(100dvh - 64px); display: grid; align-items: center; padding-block: clamp(3rem, 6vw, 5.5rem); }
+.hero .wrap { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+.eyebrow { font: 500 .85rem/1.6 var(--mono); color: var(--muted); }
+.eyebrow a { color: var(--ink); }
 h1 {
-  font-size: clamp(2.75rem, 7vw, 5.25rem); line-height: 1.12;
-  letter-spacing: -.035em; font-weight: 700; margin: 1rem 0 1.25rem;
+  margin: 1.1rem 0 1.4rem;
+  font: 800 clamp(3.1rem, 7.6vw, 6.6rem)/1.04 var(--display);
+  letter-spacing: -.045em;
+  padding-top: .08em;   /* chua cho dau tieng Viet o dong tren */
 }
-/* Gach chan to dam mau xanh sau ten */
-h1 span {
-  background: linear-gradient(transparent 66%, var(--accent) 66% 92%, transparent 92%);
-  padding-inline: .06em;
-}
-.hero .lead { font-size: 1.2rem; max-width: 34ch; }
-.cta-row { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
+h1 span { color: var(--ink); }
+.hero .lead { font-size: 1.2rem; max-width: 40ch; }
+.cta-row { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2.25rem; }
 
-@media (max-width: 860px) { .hero .wrap { grid-template-columns: 1fr; } }
+/* Hai anh xep chong lech nhau, phang */
+.collage { position: relative; display: block; aspect-ratio: 1 / .92; }
+.collage img {
+  position: absolute; height: auto; display: block;
+  border: 1px solid var(--line); border-radius: var(--r-img); background: var(--surface);
+  transition: transform .6s var(--ease), border-color .25s;
+}
+.collage__1 { top: 0; left: 0; width: 80%; }
+.collage__2 { right: 0; bottom: 4%; width: 78%; border-color: var(--accent); }
+.collage:hover .collage__1 { transform: translate(-8px, -8px); }
+.collage:hover .collage__2 { transform: translate(8px, 8px); }
 
-/* Nen hero: luoi cham mo + vang sang xanh o goc, tat dan ve phia duoi */
-.hero { position: relative; isolation: isolate; overflow: hidden; }
-.hero::before {
-  content: ""; position: absolute; inset: 0; z-index: -1;
-  background:
-    radial-gradient(48rem 32rem at 85% 20%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%),
-    radial-gradient(circle, color-mix(in srgb, var(--ink) 14%, transparent) 1px, transparent 1.5px) 0 0 / 22px 22px;
-  -webkit-mask-image: linear-gradient(#000 55%, transparent);
-  mask-image: linear-gradient(#000 55%, transparent);
-}
-
-/* ---------- Terminal trang tri o hero (luon nen toi) ---------- */
-.term-wrap { position: relative; padding: 0 0 2.25rem 1.5rem; }
-.term {
-  position: relative;
-  background: #141814; color: #DDE3D6;
-  border: 1px solid #2A3027; border-radius: var(--r);
-  box-shadow:
-    0 1px 0 rgb(255 255 255 / .06) inset,
-    0 30px 60px -20px rgb(20 40 0 / .35),
-    0 0 0 6px color-mix(in srgb, var(--accent) 16%, transparent);
-  overflow: hidden;
-}
-.term__bar {
-  display: flex; align-items: center; gap: .45rem;
-  padding: .8rem 1rem; border-bottom: 1px solid #2A3027; background: #1A1F19;
-}
-.term__bar i { width: 11px; height: 11px; border-radius: 50%; background: #3A4136; }
-.term__bar i:first-child { background: var(--accent); }
-.term__bar span { margin-left: .6rem; font: 500 .78rem/1 var(--mono); color: #8E9887; }
-
-.term__body {
-  list-style: none; margin: 0; padding: 1.25rem 1.25rem 1.5rem;
-  font: 500 clamp(.74rem, 1.1vw, .86rem)/1.9 var(--mono);
-  overflow: hidden;
-}
-.ln { white-space: pre; }
-.ln::before { display: inline-block; width: 1.6em; }
-.ln--cmd::before { content: "$"; color: var(--accent); }
-.ln--info { color: #8E9887; }
-.ln--info::before { content: "›"; }
-.ln--ok::before { content: "✓"; color: var(--accent); }
-.ln--done { color: var(--accent); font-weight: 600; }
-.ln--done::before { content: "●"; }
-.ln--cursor span {
-  display: inline-block; width: .6em; height: 1.1em; vertical-align: -.2em;
-  background: #DDE3D6;
-}
-
-/* Nhan stack noi o goc duoi trai */
-.term__stack {
-  position: absolute; left: 0; bottom: 0;
-  list-style: none; margin: 0; padding: .7rem .8rem;
-  display: flex; flex-wrap: wrap; gap: .4rem; max-width: 80%;
-  background: var(--bg); border: 1px solid var(--line); border-radius: 14px;
-  box-shadow: 0 12px 30px -12px rgb(0 0 0 / .25);
-}
-.term__stack li {
-  padding: .15rem .6rem; border-radius: 999px;
-  background: var(--tint); font: 500 .74rem/1.6 var(--mono);
-}
-@media (max-width: 860px) { .term-wrap { padding-left: 0; } .term__stack { left: 1rem; } }
-
-/* Tung dong hien ra lan luot nhu dang chay that, con tro nhap nhay */
-@media (prefers-reduced-motion: no-preference) {
-  .js .ln { opacity: 0; animation: line-in .35s ease forwards; animation-delay: calc(.6s + var(--i) * .32s); }
-  .ln--cursor span { animation: blink 1s steps(1) infinite; }
-}
-@keyframes line-in { from { opacity: 0; transform: translateX(-4px); } to { opacity: 1; transform: none; } }
-@keyframes blink { 50% { opacity: 0; } }
-
-/* ---------- Gioi thieu ---------- */
-.statement { margin-top: 1.5rem; font-size: 1.15rem; max-width: 65ch; }
+/* ---------- Gioi thieu: tieu de trai, doan van lon phai ---------- */
+.about-grid { display: grid; grid-template-columns: 4fr 8fr; gap: 1.5rem 3rem; align-items: start; }
+.statement { font-size: clamp(1.2rem, 2vw, 1.5rem); line-height: 1.55; max-width: 52ch; }
 .facts {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
-  margin-top: 3rem; padding-top: 1.75rem; border-top: 1px solid var(--line);
+  grid-column: 2; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  margin-top: 1rem; padding-top: 1.5rem; border-top: 1px solid var(--line);
 }
-.facts dt { color: var(--muted); font-size: .85rem; }
+.facts dt { font: 500 .75rem/1.5 var(--mono); color: var(--muted); }
 .facts dd { font-weight: 600; overflow-wrap: anywhere; }
-@media (max-width: 700px) { .facts { grid-template-columns: 1fr; } }
 
-/* ---------- Ky nang ---------- */
-.alt { background: var(--surface); }
-.tabs {
-  display: grid; grid-template-columns: minmax(220px, 1fr) 2fr;
-  gap: 2rem; margin-top: 2.5rem; align-items: start;
-}
-.tablist { display: flex; flex-direction: column; gap: .35rem; }
+/* ---------- Ky nang: tab ngang, chip bam xem chi tiet ---------- */
+.tabs { margin-top: 2.5rem; }
+.tablist { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.25rem; }
 .tablist button {
-  font: 500 1rem/1.3 var(--font); text-align: left;
-  padding: .9rem 1.2rem; border-radius: 999px; border: 1px solid transparent;
-  background: transparent; color: var(--muted); cursor: pointer;
-  transition: background .2s, color .2s;
+  font: 500 .95rem/1.2 var(--font); padding: .7rem 1.15rem; border-radius: 999px;
+  border: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer;
+  transition: background .2s, color .2s, border-color .2s;
 }
-.tablist button:hover { background: var(--surface-2); color: var(--ink); }
-.tablist button[aria-selected="true"] { background: var(--ink); color: var(--bg); }
+.tablist button:hover { color: var(--ink); border-color: var(--ink); }
+.tablist button[aria-selected="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
 
 .panel {
+  display: grid; grid-template-columns: 7fr 5fr; gap: 1.5rem 2.5rem; align-items: start;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
   background: var(--bg); border: 1px solid var(--line); border-radius: var(--r);
-  padding: 2rem; min-height: 220px;
-  display: flex; flex-direction: column; gap: 1.5rem;
 }
 .panel[hidden] { display: none; }
-.panel:not([hidden]) { animation: fade .35s ease; }
-@keyframes fade { from { opacity: 0; transform: translateY(6px); } }
+.panel:not([hidden]) { animation: fade .4s var(--ease); }
+@keyframes fade { from { opacity: 0; transform: translateY(8px); } }
 
-.chips { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .6rem; }
+.chips { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .55rem; }
 .chips > li { display: flex; }
 .chip {
   padding: .55rem 1rem; border-radius: 999px;
   background: var(--surface); border: 1px solid var(--line); color: var(--ink);
-  font: 500 .95rem/1.4 var(--font); cursor: pointer;
-  transition: background .2s, border-color .2s;
+  font: 500 .95rem/1.35 var(--font); cursor: pointer;
+  transition: background .2s, border-color .2s, transform .2s var(--ease);
 }
 .chip:hover { border-color: var(--accent); }
+.chip:active { transform: scale(.97); }
 .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 
-/* Dong mo ta ky nang dang chon, nam cuoi panel */
-.detail {
-  margin-top: auto; padding-top: 1.25rem; border-top: 1px solid var(--line);
-  color: var(--muted); max-width: 60ch;
-}
-.detail b { color: var(--ink); font-weight: 650; margin-right: .4rem; }
-.detail.swap span { animation: fade .3s ease; }
+/* Mo ta ky nang dang chon: cot phai cua panel */
+.detail { color: var(--muted); padding-left: 1.5rem; border-left: 2px solid var(--accent); min-height: 3.5rem; }
+.detail b { display: block; color: var(--ink); font: 700 1.15rem/1.3 var(--display); margin-bottom: .3rem; }
+.detail.swap span { animation: fade .3s var(--ease); }
 
-/* Chip nho, chi hien thi (tech o kinh nghiem va du an) */
+/* Chip nho, chi hien thi (tech o kinh nghiem, cong cu, du an) */
 .chips.sm li {
-  padding: .2rem .7rem; border-radius: 999px;
-  font: 500 .78rem/1.6 var(--mono);
-  border: 1px solid color-mix(in srgb, currentColor 24%, transparent);
-}
-@media (max-width: 760px) {
-  .tabs { grid-template-columns: 1fr; }
-  .tablist { flex-direction: row; overflow-x: auto; padding-bottom: .25rem; }
-  .tablist button { white-space: nowrap; }
+  padding: .2rem .7rem; border-radius: 999px; font: 500 .76rem/1.6 var(--mono);
+  border: 1px solid color-mix(in srgb, currentColor 22%, transparent);
 }
 
 /* ---------- Kinh nghiem ---------- */
 .jobs { list-style: none; padding: 0; margin-top: 2.5rem; }
-.job { display: grid; grid-template-columns: minmax(220px, 3fr) 8fr; gap: 2rem; padding-block: 2.5rem; }
+.job { display: grid; grid-template-columns: minmax(230px, 4fr) 8fr; gap: 2.5rem; padding-block: 2.5rem; }
 .job + .job { border-top: 1px solid var(--line); }
-.job-meta { position: sticky; top: 96px; align-self: start; }
-.job-meta h3 { font-size: 1.25rem; }
+.job-meta { position: sticky; top: 96px; align-self: start; display: grid; gap: .25rem; }
+.job-meta h3 { font-size: 1.45rem; }
 .job-meta p { color: var(--muted); font-size: .95rem; }
-.job-meta p:first-of-type { color: var(--ink); font-weight: 600; margin-top: .4rem; }
+.job-meta p:first-of-type { color: var(--ink); font-weight: 600; }
+.job-meta .mono { color: var(--accent-ink); }
 .now {
-  display: inline-block; margin-top: .5rem; padding: .1rem .7rem; border-radius: 999px;
-  background: var(--accent); color: var(--on-accent); font-size: .78rem; font-weight: 600;
+  justify-self: start; margin: .3rem 0; padding: .1rem .65rem; border-radius: 999px;
+  background: var(--tint); color: var(--accent-ink); font: 600 .75rem/1.7 var(--mono);
 }
 .bul { padding-left: 1.1rem; margin-bottom: 1.5rem; }
-.bul li { margin-bottom: .65rem; max-width: 68ch; }
+.bul li { margin-bottom: .6rem; max-width: 68ch; }
 .bul li::marker { color: var(--accent); }
-@media (max-width: 760px) {
-  .job { grid-template-columns: 1fr; gap: 1rem; }
-  .job-meta { position: static; }
-}
 
 /* ---------- Hoc van ---------- */
 .tight { padding-top: 0; }
 .edu {
-  background: var(--surface); border-radius: var(--r);
-  padding: clamp(1.5rem, 4vw, 2.5rem); margin-top: 2rem;
+  margin-top: 1.5rem; padding: clamp(1.5rem, 4vw, 2.25rem);
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem 3rem;
+  border: 1px solid var(--line); border-radius: var(--r);
 }
 .edu h3 { font-size: 1.3rem; }
 .edu p { color: var(--muted); }
+.edu .mono { color: var(--accent-ink); }
 
-/* ---------- Cong cu tai Zyxel: moi cong cu mot the lon (anh + noi dung + so lieu) ---------- */
-.tools-intro { margin-top: 1rem; }
+/* ---------- Cong cu tai Zyxel: moi cong cu mot the lon ---------- */
+.tools-intro { margin-top: 1rem; font-size: 1.1rem; }
 .case {
   display: grid; grid-template-columns: 7fr 5fr; gap: 1.5rem 2.5rem;
   grid-template-areas: "shot body" "metrics metrics" "tech tech";
@@ -348,101 +231,78 @@ h1 span {
   background: var(--bg); border: 1px solid var(--line); border-radius: var(--r);
 }
 .case--flip { grid-template-columns: 5fr 7fr; grid-template-areas: "body shot" "metrics metrics" "tech tech"; }
-.shot { grid-area: shot; margin: 0; align-self: start; }
+.shot { grid-area: shot; align-self: start; }
 .shot img {
   display: block; width: 100%; height: auto;
-  border: 1px solid var(--line); border-radius: 12px;
-  box-shadow: 0 20px 40px -24px rgb(20 40 0 / .35);
+  border: 1px solid var(--line); border-radius: var(--r-img);
 }
 .case__body { grid-area: body; display: flex; flex-direction: column; gap: .75rem; }
-.case .kind { font: 500 .8rem/1.4 var(--mono); color: var(--muted); }
-.case h3 { font-size: clamp(1.3rem, 2.4vw, 1.6rem); }
-.case__summary { color: var(--ink); }
+.kind { font: 500 .8rem/1.4 var(--mono); color: var(--muted); }
+.case h3 { font-size: clamp(1.4rem, 2.6vw, 1.85rem); }
 .case .bul { margin: 0; color: var(--muted); }
 .case .bul li { margin-bottom: .4rem; }
 .case__note { color: var(--muted); }
-.case__link { font-weight: 600; align-self: flex-start; }
+.case__link { font-weight: 600; align-self: flex-start; color: var(--accent-ink); }
 
-/* Trang thai: cham xanh nhap nhay nhe */
+/* Trang thai that cua cong cu */
 .status { display: flex; align-items: center; gap: .55rem; font-size: .9rem; font-weight: 600; }
 .status span {
   width: .55rem; height: .55rem; border-radius: 50%; flex: none;
-  background: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent);
+  background: var(--accent);
 }
 
 .metrics {
   grid-area: metrics; display: grid; grid-template-columns: repeat(4, 1fr); gap: .75rem;
-  margin: 0; padding-top: 1.5rem; border-top: 1px solid var(--line);
+  padding-top: 1.5rem; border-top: 1px solid var(--line);
 }
-.metrics div { display: flex; flex-direction: column-reverse; gap: .2rem; }
-.metrics dd { margin: 0; font: 700 clamp(1.5rem, 3vw, 2.1rem)/1.1 var(--font); letter-spacing: -.02em; }
+.metrics div { display: flex; flex-direction: column-reverse; gap: .15rem; }
+.metrics dd { font: 800 clamp(1.6rem, 3.2vw, 2.4rem)/1.05 var(--display); letter-spacing: -.03em; }
 .metrics dt { color: var(--muted); font-size: .85rem; }
 .case__tech { grid-area: tech; }
 
 /* Bitrix24: noi dung trai, luoi 6 viec phai */
 .case--grid { grid-template-areas: "body tasks"; grid-template-columns: 4fr 7fr; }
 .case--grid .chips { margin-top: auto; }
-.tasks {
-  grid-area: tasks; list-style: none; margin: 0; padding: 0;
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem;
-}
-.tasks li {
-  display: flex; flex-direction: column; gap: .3rem;
-  padding: 1rem 1.1rem; border-radius: 14px; background: var(--surface);
-}
+.tasks { grid-area: tasks; list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; }
+.tasks li { display: flex; flex-direction: column; gap: .3rem; padding: 1rem 1.1rem; border-radius: 12px; background: var(--surface-2); }
 .tasks li:first-child { background: var(--tint); }
-.tasks b { font-weight: 650; }
+.tasks b { font-weight: 600; }
 .tasks span { color: var(--muted); font-size: .92rem; }
 
-/* Ke hoach tiep theo: the vien net dut */
+/* Ke hoach tiep theo: vien net dut */
 .next {
-  margin-top: 1.5rem; padding: clamp(1.25rem, 3vw, 1.75rem);
-  border: 1.5px dashed color-mix(in srgb, var(--accent) 60%, var(--line)); border-radius: var(--r);
-  display: grid; gap: .5rem;
+  margin-top: 1.5rem; padding: clamp(1.25rem, 3vw, 1.75rem); display: grid; gap: .5rem;
+  border: 1.5px dashed color-mix(in srgb, var(--accent) 55%, var(--line)); border-radius: var(--r);
 }
-.next__tag { font: 500 .8rem/1.4 var(--mono); color: var(--muted); }
-.next h3 { font-size: 1.2rem; }
+.next__tag { font: 500 .8rem/1.4 var(--mono); color: var(--accent-ink); }
+.next h3 { font-size: 1.25rem; }
 .next p { color: var(--muted); max-width: 70ch; }
 
-@media (max-width: 900px) {
-  .case, .case--flip { grid-template-columns: 1fr; grid-template-areas: "shot" "body" "metrics" "tech"; }
-  .case--grid { grid-template-columns: 1fr; grid-template-areas: "body" "tasks"; }
-  .metrics { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-}
-@media (max-width: 600px) {
-  .case { margin-top: 1.75rem; gap: 1.25rem; }
-  .tasks { grid-template-columns: 1fr; }
-}
-
-/* ---------- Du an: bento 5 o ---------- */
-.bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem; margin-top: 3rem; }
+/* ---------- Du an: bento 5 o, moi o mot kieu nen ---------- */
+.bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem; margin-top: 2.5rem; }
 .tile {
-  grid-column: span 12;
-  border: 1px solid var(--line); border-radius: var(--r);
+  grid-column: span 12; position: relative; overflow: hidden;
+  display: flex; flex-direction: column; gap: .85rem;
   padding: clamp(1.5rem, 3vw, 2.25rem);
-  display: flex; flex-direction: column; gap: .9rem; background: var(--bg);
-  transition: transform .25s ease, box-shadow .25s ease, border-color .25s;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r);
+  transition: border-color .25s, background .25s;
 }
 .tile:hover {
-  transform: translateY(-4px);
-  border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
-  box-shadow: 0 18px 40px -22px rgb(20 40 0 / .4);
+  border-color: var(--accent);
 }
-@media (prefers-reduced-motion: reduce) { .tile:hover { transform: none; } }
-.tile h3 { font-size: 1.3rem; }
-.tile .kind { font: 500 .8rem/1.4 var(--mono); color: var(--muted); }
+.tile h3 { font-size: 1.35rem; }
 .tile p { color: var(--muted); max-width: 60ch; }
 .tile .chips { margin-top: auto; padding-top: .5rem; }
 .tile .btn { align-self: flex-start; }
 .t-a { background: var(--tint); }
-.t-b { background: linear-gradient(160deg, var(--surface-2), var(--tint)); }
-.t-d { background: var(--surface); }
-.t-a h3, .t-b h3 { font-size: 1.6rem; }
+.t-a h3, .t-b h3 { font-size: clamp(1.5rem, 2.6vw, 1.9rem); }
 .t-a p, .t-b p { color: var(--ink); }
-.t-e { background: var(--block); color: var(--on-block); border-color: var(--block); }
-.t-e p, .t-e .kind { color: color-mix(in srgb, var(--on-block) 78%, transparent); }
-.t-e .btn { border-color: var(--on-block); color: var(--on-block); }
-.t-e .btn:hover { background: color-mix(in srgb, var(--on-block) 12%, transparent); }
+.t-b { background: var(--surface); border-color: var(--accent); }
+.t-d { background: var(--surface-2); }
+.t-e { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.t-e p, .t-e .kind { color: color-mix(in srgb, var(--bg) 72%, transparent); }
+.t-e .btn { border-color: var(--bg); color: var(--bg); }
+.t-e .btn:hover { background: var(--bg); color: var(--ink); }
 @media (min-width: 900px) {
   .t-a { grid-column: span 7; }
   .t-b { grid-column: span 5; }
@@ -450,94 +310,96 @@ h1 span {
   .t-d { grid-column: span 7; }
 }
 
-/* ---------- Lien he: khoi xanh, chu co dinh #1A1A1A ---------- */
-.cta {
-  background: var(--accent); color: #1A1A1A;
-  --ink: #1A1A1A; --muted: rgb(26 26 26 / .78); --surface: rgb(26 26 26 / .1);
-}
+/* ---------- Lien he ---------- */
+.cta { background: var(--surface); border-top: 1px solid var(--line); }
 .cta .lead { margin-top: 1rem; }
-.cta h2::before { background: #1A1A1A; }
-.cta a { text-decoration-color: #1A1A1A; }
-.mailrow { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 2rem; }
+.mailrow { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 2.25rem; }
 .mail {
-  font: 700 clamp(1.5rem, 4.5vw, 3rem)/1.2 var(--font); letter-spacing: -.02em;
-  overflow-wrap: anywhere; text-decoration-thickness: 3px;
+  font: 800 clamp(1.7rem, 5.2vw, 3.8rem)/1.1 var(--display); letter-spacing: -.035em;
+  overflow-wrap: anywhere; text-decoration-thickness: 4px; text-underline-offset: 8px;
+  transition: color .2s;
 }
+.mail:hover { color: var(--accent-ink); }
 .meta {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem 2rem; margin-top: 3rem; padding-top: 2rem;
-  border-top: 1.5px solid rgb(26 26 26 / .35);
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem 2rem;
+  margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--line);
 }
-.meta dt { font-size: .85rem; color: var(--muted); }
+.meta dt { font: 500 .75rem/1.5 var(--mono); color: var(--muted); }
 .meta dd { font-weight: 600; overflow-wrap: anywhere; }
 
 /* ---------- Footer ---------- */
-footer { padding-block: 2rem; color: var(--muted); font-size: .9rem; }
+footer { padding-block: 2rem; color: var(--muted); font-size: .9rem; background: var(--surface); }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 2rem; }
 
 /* ---------- Chuyen dong: chi bat khi co JS va nguoi dung khong tat ---------- */
 @media (prefers-reduced-motion: no-preference) {
   .js .reveal {
-    opacity: 0; transform: translateY(14px);
-    transition: opacity .6s ease, transform .6s cubic-bezier(.2, .7, .2, 1);
+    opacity: 0; transform: translateY(16px);
+    transition: opacity .7s var(--ease), transform .7s var(--ease);
     transition-delay: var(--d, 0s);
   }
   .js .reveal.in { opacity: 1; transform: none; }
+  /* Hai anh hero tach ra tu giua khi xuat hien */
+  .js .collage:not(.in) .collage__1 { transform: translate(8%, 6%); }
+  .js .collage:not(.in) .collage__2 { transform: translate(-8%, -6%); }
 }
 @media (prefers-reduced-motion: reduce) {
   .panel:not([hidden]), .detail.swap span { animation: none; }
+  .collage img, .tile, .btn, .chip { transition: none; }
+  .collage:hover img, .tile:hover { transform: none; }
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 900px) {
+  .hero { min-height: 0; }
+  .hero .wrap { grid-template-columns: 1fr; }
+  .collage { max-width: 560px; }
+  .about-grid { grid-template-columns: 1fr; }
+  .facts { grid-column: 1; }
+  .panel { grid-template-columns: 1fr; }
+  .detail { padding-left: 1rem; }
+  .job { grid-template-columns: 1fr; gap: 1rem; }
+  .job-meta { position: static; }
+  .case, .case--flip { grid-template-columns: 1fr; grid-template-areas: "shot" "body" "metrics" "tech"; }
+  .case--grid { grid-template-columns: 1fr; grid-template-areas: "body" "tasks"; }
+  .metrics { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
 }
 
 /* ---------- Dien thoai ---------- */
 @media (max-width: 600px) {
   .wrap { width: min(100% - 2rem, var(--max)); }
-
-  /* Hero cao theo noi dung thay vi bang ca man hinh */
-  .hero { min-height: 0; padding-block: 2.5rem 3.5rem; }
+  section { padding-block: 3.5rem; }
+  .brand small { display: none; }
+  .hero { padding-block: 2.25rem 3rem; }
   h1 { margin: .75rem 0 1rem; }
-  .hero .lead { font-size: 1.1rem; }
+  .hero .lead { font-size: 1.08rem; }
   .cta-row { margin-top: 1.5rem; }
-  .cta-row .btn { flex: 1 1 auto; justify-content: center; }
-
-  /* Khung stack nam duoi terminal, khong de len chu */
-  .term-wrap { padding: 0; }
-  .term__stack { position: relative; left: auto; bottom: auto; max-width: none; margin: -.75rem 1rem 0; }
-  .term__body { padding: 1rem 1rem 1.5rem; }
-
-  .statement { font-size: 1.05rem; }
-  .facts { gap: 1rem; margin-top: 2rem; }
-
-  /* Tab ky nang xuong dong thay vi cuon ngang */
-  .tabs { gap: 1rem; margin-top: 1.75rem; }
-  .tablist { flex-wrap: wrap; overflow: visible; gap: .4rem; padding-bottom: 0; }
-  .tablist button { padding: .5rem .9rem; font-size: .9rem; border-color: var(--line); background: var(--bg); }
-  .panel { padding: 1.25rem; min-height: 0; gap: 1.25rem; }
+  .cta-row .btn { flex: 1 1 auto; }
+  .collage { aspect-ratio: 1 / 1; }
+  .facts { grid-template-columns: 1fr; gap: 1rem; }
+  .tablist button { padding: .5rem .9rem; font-size: .88rem; }
+  .panel { padding: 1.25rem; gap: 1.25rem; }
   .chip { font-size: .88rem; padding: .45rem .85rem; }
-
   .job { padding-block: 1.75rem; }
   .bul li { margin-bottom: .5rem; }
-
+  .case { margin-top: 1.75rem; gap: 1.25rem; }
+  .tasks { grid-template-columns: 1fr; }
   .bento { margin-top: 2rem; gap: .75rem; }
   .tile { padding: 1.25rem; }
-  .t-a h3, .t-b h3 { font-size: 1.3rem; }
-  .tile h3 { font-size: 1.15rem; }
-
-  .mailrow { margin-top: 1.5rem; gap: .75rem; }
-  .mail { font-size: 1.45rem; }
+  .mailrow { gap: .75rem; }
   .meta { gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; }
   footer .wrap { flex-direction: column; }
 }
 
 /* ---------- In / xuat PDF (Ctrl+P) dung lam CV nhanh ---------- */
 @media print {
-  .top, .menu, .cta-row, .term-wrap, .mailrow .btn, footer a { display: none !important; }
+  .top, .menu, .cta-row, .collage, .mailrow .btn, footer a, .shot { display: none !important; }
   .js .reveal { opacity: 1 !important; transform: none !important; }
-  body { font-size: 11pt; }
+  body { font-size: 11pt; background: #fff; color: #000; }
   section { padding-block: 1.25rem; }
   .hero { min-height: 0; }
-  .hero::before { display: none; }
-  .alt, .cta, .tile, .edu { background: none !important; color: #000; }
-  .panel[hidden] { display: flex; }
+  .alt, .cta, .tile, .edu, .case, footer { background: none !important; color: #000; border-color: #ccc; }
+  .panel[hidden] { display: grid; }
   .tablist, .detail { display: none; }
-  .tile, .job { break-inside: avoid; }
+  .tile, .job, .case { break-inside: avoid; }
 }

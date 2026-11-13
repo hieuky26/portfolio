@@ -1,7 +1,7 @@
 # Portfolio — Lê Hiếu Kỳ
 
 Trang portfolio một trang, song ngữ EN/VI.
-Giao diện theo Zyxel Networks Brand Guidelines (08/2026): xanh `#64BE00`, chữ `#1A1A1A`, logo chữ đen trên nền sáng, chữ trắng khi dark mode; font Be Vietnam Pro + JetBrains Mono; có dark mode.
+Giao diện cá nhân: tone trắng và vàng gold (`#C9A227`), giao diện phẳng (không đổ bóng, không gradient); font Inter.
 
 Live: https://hieuky.is-a.dev
 
@@ -14,7 +14,7 @@ Toàn bộ nội dung nằm ở hai file Python, **không cần đụng vào HTM
 
 | File | Chứa gì |
 |---|---|
-| `content.py` | Thông tin cá nhân, kỹ năng, kinh nghiệm, học vấn, dự án, logo, số liệu hero |
+| `content.py` | Thông tin cá nhân, kỹ năng, kinh nghiệm, học vấn, dự án, công cụ tại Zyxel |
 | `ui.py` | Nhãn giao diện: menu, tiêu đề mục, nút bấm, mô tả SEO |
 
 Chỗ nào cần song ngữ thì viết dạng `{"en": "...", "vi": "..."}`; chỗ nào dùng chung
@@ -96,7 +96,7 @@ ui.py                   Nhãn giao diện theo ngôn ngữ
 templates/index.html    Trang chính
 static/css/style.css    Design tokens + toàn bộ giao diện
 static/js/main.js       Tab kỹ năng, reveal khi cuộn, menu mobile, nút copy, nhớ ngôn ngữ
-static/img/             favicon + logo Zyxel (SVG, tách từ brand guideline)
+static/img/             favicon + ảnh chụp các công cụ (work/)
 ```
 
 > Không đặt tên file là `site.py` — trùng với module chuẩn của Python và sẽ che mất nó.
@@ -106,4 +106,3 @@ static/img/             favicon + logo Zyxel (SVG, tách từ brand guideline)
 - In / xuất PDF: `Ctrl+P` đã có style riêng, ẩn nav, nút và phần trang trí — dùng làm CV nhanh được.
 - Tôn trọng `prefers-reduced-motion`: tắt animation nếu người dùng bật giảm chuyển động.
 - Không phụ thuộc thư viện JS ngoài; chỉ tải font từ Google Fonts.
-- Thiếu file logo thì nav tự quay về ô vuông chữ cái, không để lại ảnh vỡ.

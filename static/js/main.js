@@ -15,22 +15,6 @@
     });
   });
 
-  /* ---------- Logo: thieu file thi quay ve dau hieu chu cai ---------- */
-  var brandLogo = document.getElementById("brandLogo");
-  if (brandLogo) {
-    var useInitials = function () {
-      if (!brandLogo.parentNode) return;
-      var mark = document.createElement("span");
-      mark.className = "brand__mark";
-      mark.setAttribute("aria-hidden", "true");
-      mark.textContent = brandLogo.dataset.fallback || "";
-      brandLogo.replaceWith(mark);
-    };
-    brandLogo.addEventListener("error", useInitials);
-    // Script chay voi defer nen anh co the da loi xong truoc khi gan listener
-    if (brandLogo.complete && brandLogo.naturalWidth === 0) useInitials();
-  }
-
   /* ---------- Menu mobile tu dong sau khi chon ---------- */
   var menu = document.querySelector(".menu");
   if (menu) {
