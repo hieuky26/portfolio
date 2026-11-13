@@ -28,6 +28,10 @@ def t(value, lang):
 PROFILE = {
     "name": "Lê Hiếu Kỳ",
     "initials": "HK",
+    # Anh chan dung muc Gioi thieu (da tach nen, dat tren nen toi 4:5)
+    "photo": "/static/img/portrait.webp",
+    "photo_w": 900,
+    "photo_h": 1143,
     "role": {
         "en": "System Integration Engineer",
         "vi": "Kỹ sư Tích hợp Hệ thống",

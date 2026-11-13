@@ -6,8 +6,8 @@
 <title>{{ profile.name }} - {{ profile.role }}</title>
 <meta name="description" content="{{ ui.meta_description }}">
 <meta name="author" content="{{ profile.name }}">
-<meta name="theme-color" content="#FFFFFF">
-<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#0E0E10">
+<meta name="color-scheme" content="dark">
 
 <meta property="og:type" content="profile">
 <meta property="og:title" content="{{ profile.name }} - {{ profile.role }}">
@@ -45,6 +45,7 @@ document.documentElement.classList.add("js");
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
 <link rel="stylesheet" href="{{ asset('/static/css/style.css') }}">
 </head>
 
@@ -55,7 +56,7 @@ document.documentElement.classList.add("js");
 <header class="top">
   <div class="wrap bar">
     {# Wordmark ca nhan: chi ten, khong logo cong ty #}
-    <a class="brand" href="#top"><b>{{ profile.name }}</b><small>{{ profile.role }}</small></a>
+    <a class="brand" href="#top">{{ profile.name }}</a>
 
     {% set nav_items = [
       ('#about', ui.nav.about), ('#skills', ui.nav.skills), ('#experience', ui.nav.experience),
@@ -83,77 +84,89 @@ document.documentElement.classList.add("js");
 <main id="main">
 
 <!-- ================= HERO ================= -->
-<section class="hero">
+{# Toan khung, chu can giua. Muon them anh nen: dat profile.hero_bg trong content.py #}
+<section class="hero"{% if profile.hero_bg %} style="--hero-bg:url('{{ asset(profile.hero_bg) }}')"{% endif %}>
   <div class="wrap">
-    <div>
-      <p class="eyebrow reveal">
-        {{ profile.role }}
-        {%- if profile.company %} {{ ui.hero.at }}
-          {% if profile.company_url %}<a href="{{ profile.company_url }}" target="_blank" rel="noopener">{{ profile.company }}</a>
-          {%- else %}{{ profile.company }}{% endif %}
-        {%- endif %}
-      </p>
-      <h1 class="reveal" style="--d:.08s"><span>{{ profile.name }}</span></h1>
-      <p class="lead reveal" style="--d:.16s">{{ profile.tagline }}</p>
-      <div class="cta-row reveal" style="--d:.24s">
-        <a class="btn primary" href="#contact">{{ ui.hero.cta_contact }}</a>
-        <a class="btn" href="#projects">{{ ui.hero.cta_projects }}</a>
-        {% if profile.cv_url %}
-        <a class="btn" href="{{ profile.cv_url }}" target="_blank" rel="noopener">{{ ui.hero.cta_cv }}</a>
-        {% endif %}
-      </div>
+    <p class="hello reveal">{{ ui.hero.hello }}</p>
+    <h1 class="reveal" style="--d:.08s">{{ profile.name }}</h1>
+    <p class="role-line reveal" style="--d:.16s">
+      {{ profile.role }}
+      {%- if profile.company %} {{ ui.hero.at }}
+        {% if profile.company_url %}<a href="{{ profile.company_url }}" target="_blank" rel="noopener">{{ profile.company }}</a>
+        {%- else %}{{ profile.company }}{% endif %}
+      {%- endif %}<span class="caret" aria-hidden="true"></span>
+    </p>
+    <p class="lead reveal" style="--d:.24s">{{ profile.tagline }}</p>
+
+    <ul class="social reveal" style="--d:.32s">
+      {% if profile.github %}<li><a href="{{ profile.github }}" target="_blank" rel="noopener" aria-label="{{ ui.labels.github }}"><i class="ph ph-github-logo"></i></a></li>{% endif %}
+      {% if profile.linkedin %}<li><a href="{{ profile.linkedin }}" target="_blank" rel="noopener" aria-label="{{ ui.labels.linkedin }}"><i class="ph ph-linkedin-logo"></i></a></li>{% endif %}
+      <li><a href="mailto:{{ profile.email }}" aria-label="{{ ui.labels.email }}"><i class="ph ph-envelope-simple"></i></a></li>
+      <li><a href="tel:{{ profile.phone_href }}" aria-label="{{ ui.labels.phone }}"><i class="ph ph-phone"></i></a></li>
+    </ul>
+
+    <div class="cta-row reveal" style="--d:.4s">
+      <a class="btn primary" href="#contact">{{ ui.hero.cta_contact }}</a>
+      <a class="btn" href="#projects">{{ ui.hero.cta_projects }}</a>
     </div>
-    {# Anh that cua cac cong cu da lam (content.ZYXEL_TOOLS), xep chong le nhau #}
-    <a class="collage reveal" href="#tools" style="--d:.2s" aria-label="{{ ui.sections.tools_title }}">
-      {% for c in tools.cases[:2] %}
-      <img class="collage__{{ loop.index }}" src="{{ asset(c.image) }}" alt="{{ c.image_alt }}"
-           width="{{ c.image_w }}" height="{{ c.image_h }}"{% if loop.first %} fetchpriority="high"{% endif %}>
-      {% endfor %}
-    </a>
   </div>
+  <a class="scroll-cue" href="#about" aria-label="{{ ui.nav.about }}"><i class="ph ph-arrow-down"></i></a>
 </section>
 
 <!-- ================= ABOUT ================= -->
 <section id="about">
   <div class="wrap about-grid">
-    <h2 class="reveal">{{ ui.sections.about_title }}</h2>
-    <p class="statement reveal">{{ profile.about }}</p>
-    <dl class="facts reveal">
-      <div><dt>{{ ui.labels.location }}</dt><dd>{{ profile.location }}</dd></div>
-      <div><dt>{{ ui.labels.email }}</dt><dd><a href="mailto:{{ profile.email }}">{{ profile.email }}</a></dd></div>
-      {% if profile.github %}
-      <div><dt>{{ ui.labels.github }}</dt><dd><a href="{{ profile.github }}" target="_blank" rel="noopener">{{ profile.github.split('/')[-1] }}</a></dd></div>
-      {% endif %}
-    </dl>
+    {% if profile.photo %}
+    <figure class="portrait reveal">
+      <img src="{{ asset(profile.photo) }}" alt="{{ ui.labels.photo_alt }}" width="{{ profile.photo_w }}" height="{{ profile.photo_h }}" loading="lazy" decoding="async">
+    </figure>
+    {% endif %}
+    <div class="about-text reveal" style="--d:.1s">
+      <h2>{{ ui.sections.about_title }}</h2>
+      <p class="statement">{{ profile.about }}</p>
+      <dl class="info">
+        <div><dt>{{ ui.labels.name }}</dt><dd>{{ profile.name }}</dd></div>
+        <div><dt>{{ ui.labels.position }}</dt><dd>{{ profile.role }}</dd></div>
+        {% if profile.company %}<div><dt>{{ ui.labels.company }}</dt><dd>{{ profile.company }}</dd></div>{% endif %}
+        <div><dt>{{ ui.labels.location }}</dt><dd>{{ profile.location }}</dd></div>
+        <div><dt>{{ ui.labels.phone }}</dt><dd><a href="tel:{{ profile.phone_href }}">{{ profile.phone }}</a></dd></div>
+        <div><dt>{{ ui.labels.email }}</dt><dd><a href="mailto:{{ profile.email }}">{{ profile.email }}</a></dd></div>
+        {% if profile.github %}
+        <div><dt>{{ ui.labels.github }}</dt><dd><a href="{{ profile.github }}" target="_blank" rel="noopener">{{ profile.github.split('//')[-1] }}</a></dd></div>
+        {% endif %}
+      </dl>
+      <div class="cta-row">
+        {% if profile.cv_url %}
+        <a class="btn primary" href="{{ profile.cv_url }}" target="_blank" rel="noopener"><i class="ph ph-download-simple"></i>{{ ui.hero.cta_cv }}</a>
+        {% else %}
+        <a class="btn primary" href="#contact">{{ ui.hero.cta_contact }}</a>
+        {% endif %}
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- ================= SKILLS ================= -->
+{# Moi nhom ky nang mot the: icon tron, ten nhom, chip bam xem chi tiet #}
+{% set skill_icons = ['wifi-high', 'database', 'chart-line-up', 'code'] %}
 <section id="skills" class="alt">
   <div class="wrap">
     <h2 class="reveal">{{ ui.sections.skills_title }}</h2>
-    <div class="tabs reveal">
-      <div class="tablist" role="tablist" aria-label="{{ ui.sections.skills_tabs }}">
-        {% for group in skills %}
-        <button role="tab" type="button" id="t{{ loop.index }}" aria-controls="p{{ loop.index }}"
-                aria-selected="{{ 'true' if loop.first else 'false' }}"
-                {% if not loop.first %}tabindex="-1"{% endif %}>{{ group.group }}</button>
-        {% endfor %}
-      </div>
-      <div>
-        {% for group in skills %}
-        <div class="panel" role="tabpanel" id="p{{ loop.index }}" aria-labelledby="t{{ loop.index }}"
-             {% if not loop.first %}hidden{% endif %}>
-          <ul class="chips">
-            {% for item in group['items'] %}
-            <li><button type="button" class="chip" aria-pressed="false"
-                        data-name="{{ item.name }}" data-detail="{{ item.detail }}">{{ item.name }}</button></li>
-            {% endfor %}
-          </ul>
-          <p class="detail" aria-live="polite"><span>{{ ui.sections.skills_hint }}</span></p>
-        </div>
-        {% endfor %}
-      </div>
+    <p class="lead sec-lead reveal">{{ ui.sections.skills_hint }}</p>
+    <div class="services">
+      {% for group in skills %}
+      <article class="panel reveal" style="--d:{{ loop.index0 * 0.08 }}s">
+        <span class="ico" aria-hidden="true"><i class="ph ph-{{ skill_icons[loop.index0 % 4] }}"></i></span>
+        <h3>{{ group.group }}</h3>
+        <ul class="chips">
+          {% for item in group['items'] %}
+          <li><button type="button" class="chip" aria-pressed="false"
+                      data-name="{{ item.name }}" data-detail="{{ item.detail }}">{{ item.name }}</button></li>
+          {% endfor %}
+        </ul>
+        <p class="detail" aria-live="polite"></p>
+      </article>
+      {% endfor %}
     </div>
   </div>
 </section>
@@ -203,7 +216,7 @@ document.documentElement.classList.add("js");
 <section id="tools" class="alt">
   <div class="wrap">
     <h2 class="reveal">{{ ui.sections.tools_title }}</h2>
-    <p class="lead tools-intro reveal">{{ tools.intro }}</p>
+    <p class="lead sec-lead reveal">{{ tools.intro }}</p>
 
     {% for c in tools.cases %}
     <article class="case{% if loop.index is even %} case--flip{% endif %} reveal">
@@ -278,7 +291,7 @@ document.documentElement.classList.add("js");
 <section id="contact" class="cta">
   <div class="wrap">
     <h2 class="reveal">{{ ui.sections.contact_title }}</h2>
-    <p class="lead reveal">{{ ui.sections.contact_text }}</p>
+    <p class="lead sec-lead reveal">{{ ui.sections.contact_text }}</p>
     <div class="mailrow reveal">
       <a class="mail" href="mailto:{{ profile.email }}">{{ profile.email }}</a>
       <button class="btn" type="button" aria-live="polite" data-copy="{{ profile.email }}"

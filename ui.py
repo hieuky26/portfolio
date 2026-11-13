@@ -22,6 +22,7 @@ UI = {
             "cta_contact": "Get in touch",
             "cta_projects": "View projects",
             "cta_cv": "Download CV",
+            "hello": "Hello, I am",
         },
         "sections": {
             "about_title": "A short introduction",
@@ -50,6 +51,10 @@ UI = {
             "copied": "Copied",
             "copy_failed": "Copy it manually",
             "back_to_top": "Back to top",
+            "name": "Full name",
+            "position": "Position",
+            "company": "Company",
+            "photo_alt": "Portrait of Lê Hiếu Kỳ",
         },
         "footer": {
             "built": "Built with Python and Jinja2. Deployed on Netlify.",
@@ -80,6 +85,7 @@ UI = {
             "cta_contact": "Liên hệ",
             "cta_projects": "Xem dự án",
             "cta_cv": "Tải CV",
+            "hello": "Xin chào, tôi là",
         },
         "sections": {
             "about_title": "Đôi dòng về tôi",
@@ -108,6 +114,10 @@ UI = {
             "copied": "Đã sao chép",
             "copy_failed": "Hãy sao chép thủ công",
             "back_to_top": "Lên đầu trang",
+            "name": "Họ tên",
+            "position": "Vị trí",
+            "company": "Công ty",
+            "photo_alt": "Ảnh chân dung Lê Hiếu Kỳ",
         },
         "footer": {
             "built": "Xây dựng bằng Python và Jinja2. Triển khai trên Netlify.",

@@ -29,31 +29,15 @@
     });
   }
 
-  /* ---------- Tabs ky nang: phim mui ten chuyen tab, panel con lai an ---------- */
-  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
-
-  function pick(tab) {
-    tabs.forEach(function (b) {
-      var on = b === tab;
-      b.setAttribute("aria-selected", on ? "true" : "false");
-      b.tabIndex = on ? 0 : -1;
-      document.getElementById(b.getAttribute("aria-controls")).hidden = !on;
-    });
+  /* ---------- Header: trong suot tren hero, nen dac khi cuon xuong ---------- */
+  var top = document.querySelector(".top");
+  if (top) {
+    var onScroll = function () {
+      top.classList.toggle("solid", window.scrollY > 40);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
   }
-
-  tabs.forEach(function (tab, i) {
-    tab.addEventListener("click", function () {
-      pick(tab);
-    });
-    tab.addEventListener("keydown", function (e) {
-      var step = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
-      if (!step) return;
-      e.preventDefault();
-      var next = tabs[(i + step + tabs.length) % tabs.length];
-      next.focus();
-      pick(next);
-    });
-  });
 
   /* ---------- Bam ky nang -> hien mo ta o cuoi panel ---------- */
   document.querySelectorAll(".panel").forEach(function (panel) {

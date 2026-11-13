@@ -1,7 +1,7 @@
 # Portfolio — Lê Hiếu Kỳ
 
 Trang portfolio một trang, song ngữ EN/VI.
-Giao diện cá nhân: tone trắng và vàng gold (`#C9A227`), giao diện phẳng (không đổ bóng, không gradient); font Inter.
+Giao diện cá nhân: nền đen + vàng gold (`#D4AF37`), phẳng; hero toàn khung, mục Giới thiệu có ảnh chân dung khung vàng; font Inter, icon Phosphor.
 
 Live: https://hieuky.is-a.dev
 
