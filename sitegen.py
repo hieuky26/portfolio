@@ -87,6 +87,7 @@ def build_context(lang: str, urls: dict) -> dict:
         "ui": UI[lang],
         "urls": urls,
         "asset": asset,
+        "site_root": site_root(),
         "canonical": alternates[lang],
         "alternates": alternates,
         "profile": localize(C.PROFILE, lang),

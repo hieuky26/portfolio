@@ -1,6 +1,5 @@
-/* Chuyen dong: GSAP + Lenis, hieu ung kieu React Bits viet lai bang JS thuong.
+/* Chuyen dong: GSAP + Lenis (hero hien bang CSS, khong cho JS), hieu ung kieu React Bits viet lai bang JS thuong.
    - Lenis: cuon muot, dong bo voi ScrollTrigger.
-   - Blur Text: ten o hero hien tung chu, tu mo sang ro.
    - Count Up: so lieu o muc Cong cu dem tu 0 khi cuon toi.
    - Magnet: nut chinh va icon mang xa hoi hut nhe theo chuot.
    - Spotlight Card: vet sang ho phach theo chuot tren cac the.
@@ -13,9 +12,7 @@
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   var ScrollTrigger = window.ScrollTrigger;
-  var SplitText = window.SplitText;
   if (ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
-  if (SplitText) gsap.registerPlugin(SplitText);
 
   var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   var HEADER = 72;
@@ -38,19 +35,6 @@
       e.preventDefault();
       lenis.scrollTo(target, { offset: target === 0 ? 0 : -HEADER });
       history.pushState(null, "", id);
-    });
-  }
-
-  /* ---------- Blur Text: ten o hero ---------- */
-  var h1 = document.querySelector(".hero h1");
-  if (h1 && SplitText) {
-    h1.classList.remove("reveal");   // GSAP lo phan hien, bo hieu ung CSS cu
-    var split = new SplitText(h1, { type: "words", wordsClass: "metal" });
-    h1.classList.add("is-split");
-    gsap.from(split.words, {
-      opacity: 0, y: 40, filter: "blur(12px)",
-      duration: 1.1, ease: "expo.out", stagger: 0.12, delay: 0.1,
-      clearProps: "filter"
     });
   }
 

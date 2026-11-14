@@ -14,7 +14,37 @@
 <meta property="og:description" content="{{ ui.meta_description }}">
 <meta property="og:url" content="{{ canonical }}">
 <meta property="og:locale" content="{{ 'vi_VN' if lang == 'vi' else 'en_US' }}">
-<meta name="twitter:card" content="summary">
+<meta property="og:locale:alternate" content="{{ 'en_US' if lang == 'vi' else 'vi_VN' }}">
+<meta property="og:site_name" content="{{ profile.name }}">
+{% set og_image = site_root ~ asset('/static/img/og.jpg') %}
+<meta property="og:image" content="{{ og_image }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{{ profile.name }} - {{ profile.role }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{{ og_image }}">
+
+{# Du lieu cau truc cho Google: trang ho so (ProfilePage) cua mot nguoi (Person) #}
+{% set same_as = [profile.github, profile.linkedin] | select | list %}
+<script type="application/ld+json">
+{{ {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "url": canonical,
+  "inLanguage": lang,
+  "mainEntity": {
+    "@type": "Person",
+    "name": profile.name,
+    "jobTitle": profile.role,
+    "worksFor": {"@type": "Organization", "name": profile.company, "url": profile.company_url},
+    "address": {"@type": "PostalAddress", "addressLocality": profile.location},
+    "url": site_root ~ "/",
+    "image": site_root ~ asset(profile.photo),
+    "sameAs": same_as,
+    "knowsLanguage": ["vi", "en"]
+  }
+} | tojson }}
+</script>
 
 <link rel="canonical" href="{{ canonical }}">
 <link rel="alternate" hreflang="en" href="{{ alternates.en }}">
@@ -88,25 +118,25 @@ document.documentElement.classList.add("js");
 {# Toan khung, chu can giua. Muon them anh nen: dat profile.hero_bg trong content.py #}
 <section class="hero"{% if profile.hero_bg %} style="--hero-bg:url('{{ asset(profile.hero_bg) }}')"{% endif %}>
   <div class="wrap">
-    <p class="hello reveal">{{ ui.hero.hello }}</p>
-    <h1 class="reveal" style="--d:.08s">{{ profile.name }}</h1>
-    <p class="role-line reveal" style="--d:.16s">
+    <p class="hello rise">{{ ui.hero.hello }}</p>
+    <h1 class="rise" style="--d:.08s">{{ profile.name }}</h1>
+    <p class="role-line rise" style="--d:.16s">
       {{ profile.role }}
       {%- if profile.company %} {{ ui.hero.at }}
         {% if profile.company_url %}<a href="{{ profile.company_url }}" target="_blank" rel="noopener">{{ profile.company }}</a>
         {%- else %}{{ profile.company }}{% endif %}
       {%- endif %}<span class="caret" aria-hidden="true"></span>
     </p>
-    <p class="lead reveal" style="--d:.24s">{{ profile.tagline }}</p>
+    <p class="lead rise" style="--d:.24s">{{ profile.tagline }}</p>
 
-    <ul class="social reveal" style="--d:.32s">
+    <ul class="social rise" style="--d:.32s">
       {% if profile.github %}<li><a href="{{ profile.github }}" target="_blank" rel="noopener" aria-label="{{ ui.labels.github }}"><i class="ph ph-github-logo"></i></a></li>{% endif %}
       {% if profile.linkedin %}<li><a href="{{ profile.linkedin }}" target="_blank" rel="noopener" aria-label="{{ ui.labels.linkedin }}"><i class="ph ph-linkedin-logo"></i></a></li>{% endif %}
       <li><a href="mailto:{{ profile.email }}" aria-label="{{ ui.labels.email }}"><i class="ph ph-envelope-simple"></i></a></li>
       <li><a href="tel:{{ profile.phone_href }}" aria-label="{{ ui.labels.phone }}"><i class="ph ph-phone"></i></a></li>
     </ul>
 
-    <div class="cta-row reveal" style="--d:.4s">
+    <div class="cta-row rise" style="--d:.4s">
       <a class="btn primary" href="#contact">{{ ui.hero.cta_contact }}</a>
       <a class="btn" href="#projects">{{ ui.hero.cta_projects }}</a>
     </div>
@@ -327,12 +357,11 @@ document.documentElement.classList.add("js");
   </div>
 </footer>
 
-{# Thu vien chuyen dong (tu host trong static/vendor): GSAP 3.15.0 + ScrollTrigger + SplitText, Lenis 1.3.27.
+{# Thu vien chuyen dong (tu host trong static/vendor): GSAP 3.15.0 + ScrollTrigger, Lenis 1.3.27.
    motion.js chay sau cung; neu thu vien khong tai duoc thi trang van dung binh thuong voi main.js. #}
 <script src="{{ asset('/static/js/main.js') }}" defer></script>
 <script src="{{ asset('/static/vendor/gsap.min.js') }}" defer></script>
 <script src="{{ asset('/static/vendor/ScrollTrigger.min.js') }}" defer></script>
-<script src="{{ asset('/static/vendor/SplitText.min.js') }}" defer></script>
 <script src="{{ asset('/static/vendor/lenis.min.js') }}" defer></script>
 <script src="{{ asset('/static/js/motion.js') }}" defer></script>
 </body>
