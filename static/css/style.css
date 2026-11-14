@@ -2,22 +2,30 @@
    Portfolio - Le Hieu Ky
    Bo cuc: hero toan khung chu can giua, Gioi thieu co anh khung vang + bang
    thong tin, tieu de muc can giua co gach vang.
-     - Nen den + mot mau nhan vang gold. Giao dien phang: khong do bong, khong gradient.
+     - Tone nau vang anh kim + ho phach, chi tu 3 ma mau goc:
+         #5B4632 nau dong  |  #F4D9A0 vang kim nhat  |  #C8792C ho phach
+       Nen/the la cac sac toi hon cua #5B4632; chu "anh kim" la gradient #F4D9A0 -> #C8792C.
      - Font: Inter. Icon: Phosphor (regular).
      - Bo goc: the 14px, anh 4px, nut va chip bo tron han.
    ========================================================================== */
 
 :root {
-  --bg: #0E0E10;
-  --surface: #141416;         /* nen muc xen ke */
-  --surface-2: #1E1E21;       /* nen the */
-  --ink: #F3F1EA;
-  --muted: #A6A39B;
-  --line: #2B2B2F;
-  --accent: #D4AF37;          /* vang gold: nen nut, vach nhan */
-  --accent-ink: #E2C25A;      /* chu vang tren nen toi */
-  --on-accent: #0E0E10;
-  --tint: #221E12;            /* nen vang rat toi */
+  /* 3 mau goc */
+  --brown: #5B4632;
+  --gold: #F4D9A0;
+  --amber: #C8792C;
+
+  --bg: #1C160F;              /* #5B4632 toi 31% */
+  --surface: #241C14;         /* #5B4632 toi 40%: nen muc xen ke */
+  --surface-2: #2E2319;       /* #5B4632 toi 50%: nen the */
+  --ink: var(--gold);
+  --muted: rgb(244 217 160 / .68);
+  --line: var(--brown);
+  --accent: var(--amber);     /* ho phach: nen nut, vach nhan */
+  --accent-ink: var(--amber); /* chu ho phach tren nen toi (tuong phan >= 4.5:1) */
+  --on-accent: #1C160F;
+  --tint: rgb(200 121 44 / .16);
+  --metal: linear-gradient(110deg, var(--gold) 0%, var(--amber) 38%, var(--gold) 52%, var(--amber) 70%, var(--gold) 100%);
   --r: 14px;
   --r-img: 4px;
   --max: 1180px;
@@ -30,6 +38,7 @@
 /* ---------- Nen tang ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+html.lenis { scroll-behavior: auto; }   /* Lenis tu lo cuon muot */
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
@@ -138,12 +147,12 @@ nav a.lang:hover { border-color: var(--accent); }
   position: relative; min-height: 100dvh;
   display: grid; place-items: center; text-align: center;
   padding-block: 110px 90px;
-  background-color: #08080A;
+  background-color: var(--bg);
   background-image: var(--hero-bg, none);
   background-size: cover; background-position: center;
 }
 /* Phu toi len anh nen (neu co) de chu luon doc duoc */
-.hero::before { content: ""; position: absolute; inset: 0; background: rgb(8 8 10 / .72); }
+.hero::before { content: ""; position: absolute; inset: 0; background: rgb(28 22 15 / .78); }
 .hero .wrap { position: relative; display: flex; flex-direction: column; align-items: center; }
 .hello { font-size: .9rem; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: var(--muted); }
 h1 {
@@ -233,7 +242,7 @@ h1 {
 .chips > li { display: flex; }
 .chip {
   padding: .4rem .85rem; border-radius: 999px;
-  background: transparent; border: 1px solid #3C3C42; color: var(--ink);
+  background: transparent; border: 1px solid var(--line); color: var(--ink);
   font: 500 .85rem/1.35 var(--font); cursor: pointer;
   transition: background .2s, border-color .2s, color .2s, transform .2s var(--ease);
 }
@@ -355,7 +364,7 @@ h1 {
 .t-a h3, .t-b h3 { font-size: clamp(1.4rem, 2.4vw, 1.75rem); }
 .t-e { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 .t-e p, .t-e .kind { color: var(--on-accent); }
-.t-e .chips.sm li { border-color: rgb(14 14 16 / .35); color: var(--on-accent); }
+.t-e .chips.sm li { border-color: rgb(28 22 15 / .35); color: var(--on-accent); }
 .t-e .btn { border-color: var(--on-accent); color: var(--on-accent); }
 .t-e .btn:hover { background: var(--on-accent); color: var(--accent); }
 @media (min-width: 900px) {
@@ -384,6 +393,29 @@ h1 {
 /* ---------- Footer ---------- */
 footer { padding-block: 2rem; color: var(--muted); font-size: .88rem; background: var(--bg); border-top: 1px solid var(--line); }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 2rem; }
+
+/* ---------- Anh kim: chu gradient vang -> ho phach, vet sang luot qua (kieu Shiny Text) ---------- */
+.brand, h1, .hero h1 .metal, .metrics dd {
+  background: var(--metal); background-size: 250% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.hero h1.is-split { background: none; }
+.hero h1 .metal { padding-top: .1em; }
+@media (prefers-reduced-motion: no-preference) {
+  .brand, h1, .hero h1 .metal { animation: shine 6s linear infinite; }
+}
+@keyframes shine { from { background-position: 100% 0; } to { background-position: -150% 0; } }
+.btn.primary { background: var(--metal); background-size: 250% 100%; border-color: var(--amber); }
+.btn.primary:hover { background: var(--gold); border-color: var(--gold); color: var(--on-accent); }
+
+/* ---------- Spotlight Card: vet sang ho phach theo chuot (motion.js gan class .spot) ---------- */
+.spot { position: relative; isolation: isolate; }
+.spot::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgb(200 121 44 / .16), transparent 60%);
+  opacity: 0; transition: opacity .3s;
+}
+.spot:hover::before { opacity: 1; }
 
 /* ---------- Chuyen dong: chi bat khi co JS va nguoi dung khong tat ---------- */
 @media (prefers-reduced-motion: no-preference) {
@@ -443,7 +475,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   section { padding-block: 1.25rem; }
   .hero { min-height: 0; background: none; color: #000; padding-block: 1rem; }
   .hero::before { display: none; }
-  h1, .metrics dd { color: #000; }
+  h1, .metrics dd, .brand, .hero h1 .metal { color: #000; background: none; }
   .alt, .cta, .tile, .edu, .case, .panel, footer { background: none !important; color: #000; border-color: #ccc; }
   .about-grid { grid-template-columns: 1fr; }
   .detail { display: none; }
